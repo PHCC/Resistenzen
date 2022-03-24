@@ -1,0 +1,1157 @@
+Liebe Lisa,
+danke für unser Gespräch.
+
+Du schickst mir also ggf. Code updates (zusätzliche Variablen) die du behalten willst, damit ich sie in meinen code einfüge.
+
+Ich habe in Resistenzen.Rmd und NResistenzen.Rmd (angehängt in folgender email) ".group" entfernt aus dem Namen numerischer Variablen; und auffällige Kommentare "### ... ###" eingefügt für zusätzliche nominale oder numerische Variablen.
+
+Du installierst LaTeX um mit "knit > knit to pdf" selbst pdf's zu erzeugen. Falls es Probleme gibt, sehe ich mir diese nächstes Mal an.
+
+Ich gebe allen code chunks gute Namen um die plots (kleine pdf's) gut wiederzufinden. Den code musst du nicht abgeben, aber ich mache sdoch nach und nach auch Kommentare und Variablennamen englisch, das verwirrt weniger.
+
+Die Verteilunsplots sind alle vertikal geschichtet am besten. Ich muss noch ein paar fonts anpassen, aber die Kodierung erklärst du im Text.
+
+Ich fange mit Tests an um die besten Variablen für die mixed effects multivariate Regression zu finden (sie müssen erfüllen: mindestens lineare Unabhängigkeit, möglichst keine outliers). Steht denn die "mixed effect multivariable logistic regression" in dem Buch drin das du auf deine Frage bekommen hast? Wie heisst das Buch? 
+
+Du fragst nach der sample size calculation - es wäre interessant zu sehen wieviel und warum wir davon abweichen (das tun wir bestimmt, wie diskutiert).
+
+Datenfluss.txt habe ich etwas verbessert und angehängt; ausserdem noch der Auszug März incl. letzter Woche.
+
+Wir sehen Anfang nächster Woche nach dem nächsten Termin.
+
+Schönen Abend,
+Christoph
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------
+
+Liebe Lisa,
+
+Anbei eine Aufspaltung der Tabellen und einfachen plots nach MY beliebig / <8000 / >=8000 .
+Ich habe das einfach programmiert: Resistenzen.Rmd schreibt jetzt 3 files raus: ResistenzenU.csv (ungeschichtet), ResistenzenLE8000.csv (MY Less or Equal to 8000) ResistenzenGT8000.csv (MY Greater Than 8000).
+
+In NResistenzen.Rmd setzt man dann die Variable Schicht :
+Schicht <- "U"         # ungeschichtet
+Schicht <- "LE8000"    # Less than or Equal to 8000
+Schicht <- "GT8000"    # Greater than 8000
+(die letzte Zuweisung zählt)
+
+Und das ergibt NResistenzenU.csv, NResistenzenLE8000.csv oder NResistenzenGT8000.csv .
+Das angehängte file Datenfluss.txt zeigt nochmal den Datenfluss aus/in files durch die 2 Skripts.
+
+Man kontrolliert dass die plots in Anhängigkeit von MY nur bis oder ab 8000 gehen. Etliche der anderen plots mit wenig Resistenzen sind leer, da es Resistenzen nur bis oder ab 8000 gibt.
+
+Aber auf diese Weise ist MY <8000 / >=8000 vielleicht noch nicht super zu vergleichen. Das kann ich verbessern wenn wir das Ziel der Schichtung klären. Schicht im plot erwähnen wäre einfach, die plots für die 2 Schichten in einem Dokument und/oder Achsen identisch etwas mehr Arbeit etc.
+
+Aus den plots ein klares Muster für die 2 Schichten zu erkennen ist schwierig, vielleicht hast du mehr Erfolg. Ich könnte wieder eine Tabelle für die Mittelwerte machen, das hat mir da schon mal geholfen. 
+
+Weitere Punkte die ich kurz notiert habe um sie morgen zu diskutieren:
+
+- numerische Variablennamen: z.B. "MY.group" besser "MY" !?
+
+- hast du programmiert? Müssen code syncronisieren!
+- Bilder als .pdf erzeugen: knitr ausprobieren, dann mache ich named chunks
+
+- musst du den code abgeben? Kommentare, Variablennamen englisch?
+- übersetze ins englische nach und nach. Statistik OK, Medizin zu diskutieren: "Dose OK?"
+
+Anbei auch neue Verteilungs-plots, Verteilungen2022-03-16vertical.pdf und Verteilungen2022-03-16horizontal.pdf
+- welches bevorzugst du? Vielleicht HSC horizontal, Rest vertikal? Dann verbessere ich noch manche xticks u. y tick labels. Dann mache ich plots für die 2 Schichten
+- Kodierung wieder explizit in den Bildern erwähnen?
+
+- multivariable logistic regression mixed *effects*? Kausalanalyse...
+
+Natürlich bin ich offen für alle deine Fragen.
+
+Bis morgen,
+Christoph
+
+---------------------------------------------------------------------------------
+
+Liebe Lisa,
+
+anbei eine verbesserte Version von NResistenzen und ausserdem Verteilungen.Rmd . 
+
+Wie angekündigt habe ich auch 3 word files generiert. Schau mal ob du mit denen was anfangen kannst. Falls ja, müsste ich evtl. fonts verkleinern (sehe Platzprobleme die es im PDF nicht gab). Die 2 Verteilungen sind jetzt übereinander, aber das Format ist noch nicht perfekt. Ich könnte auch richtig schönen Text generieren, der nicht nach computer output aussieht - sollten wir alles erst diskutieren, sonst verbrauche ich da zuviel Zeit. Für Husbandry Systems Calves plot entscheide ich dann wie ich die 5 plots anordne.
+
+Bis morgen,
+Christoph 
+
+---------------------------------------------------------------------------------
+
+Liebe Lisa,
+
+danke für das Studienprotokoll - der grössere Zusammenhang interessiert mich immer. Allerdings verstehe ich vieles nicht, vielleicht können wir als Einstieg zusammen den Teil durchgehen der mit unserer momentanen Arbeit zusammenhängt.
+
+Ich teil(t)e mein Programm auf. Der erste Teil ist angehängt als R-notebook Resistenzen.Rmd .
+
+Bitte kopiere ihn in dasselbe Verzeichnis wie die Daten, dann kannst du ihn ihn rstudio laden und schonmal ausprobieren. Er braucht die libraries xlsx und stringr, du musst also mit R einmal ausführen (z.B. in der R-Console unten)
+  install.packages("xlsx")
+und
+  install.packages("stringr")
+
+(evtl. fragt dich rstudio automatisch ob das gemacht werden soll. Falls irgendwas nicht klappt machen wir das zusammen)
+
+Das Programm führst du dann aus mit dem Menu
+> Run > Restart R and Run all Chunks
+
+Es schreibt ein file Resistenzen.csv (Comma Separated Values). Das ist wie unser Resistenzen.xlsx vorher und du kannst es auch mit Excel ansehen (du musst vielleicht den Separator auf Komma setzen), vergleich mal diese 2 files. Aber es ist einfacher - man kann keine Excel Formatierungen in einem csv file speichern, es ist schneller geschrieben und gelesen und deshalb besser für die Arbeit im Programm. Mit Excel kannst du es auch wieder in ein .xlsx konvertieren.
+
+Der 2. Teil NResistenzen.Rmd liest dann dieses file wieder ein, macht die einfachen plots und zählt die Resistenzen, Ausgabe in NResistenzen.csv . Ich werde noch probieren, automatisch ein word-Dokument zu erstellen.
+
+Am 3. Teil Verteilungen.Rmd arbeite ich noch etwas, er kommt bald - er liest auch Resistenzen.csv ein und macht die Verteilungsplots die ich wie besprochen verschönere.
+
+Ich habe das Programm auch etwas verallgemeinert - es ist jetzt leichter die Anzahl Betriebe zu ändern (weniger oder mehr ist das gleiche Problem), oder die Anzahl Antibiotika. Variablen dazu oder weg geht sowieso.
+
+Ich werde alles erklären - wollen wir uns wieder am Samstag um 11:00 sprechen?
+
+Schönen Gruss,
+Christoph 
+
+------------------------------------------------------------------------------------
+
+Lisa: nie mehr als 60 Betriebe aber vlt. weniger!
+
+------------------------------------------------------------------------------------
+
+Liebe Lisa,
+
+Danke für unser Gespräch. Die Multiresistenzen habe ich also richtig gezählt. Bis nächste Woche mache ich die Balkendiagramme noch etwas besser (y-Achse angepasst, die 2 plots übereinander in ein Rechteck). 
+
+Vor allem splitte ich das jetzt sehr grosse und langsame Programm in Teile auf. Dann kannst du es gut laufen lassen. Wir können es mit geteiltem Bildschirm diskutieren und du kannst selbst neue Variablen hinzufügen. Verabreichte Antibiotika z.B. ist eine neue numerische Variable, die Struktur ist schon da.
+
+Könnten es auch mehr als 60 Betriebe werden? Dafür müsste ich die Struktur etwas verallgemeinern. 
+
+Spätere Erweiterungen: 
+- Multivariat logistisch ist sicher das beste Modell (mit abhängiger Variable Multiresistenz), aber man muss wissen welche Variablen man reinnimmt. Deshalb sollte man univariat anfangen
+- Stratifizieren: 2 Schichten für Milchmenge geht gut. Für Stratifizierung nach Kantonen haben wir nicht genügend Daten.
+
+Anbei noch alle Stunden im Februar.
+
+Schönes Wochenende!
+Christoph
+
+------------------------------------------------------------------------------------
+
+Christoph Pahl vous invite à une réunion Zoom planifiée. 
+
+Sujet : Zoom meeting invitation - Réunion Zoom de Christoph Pahl
+Heure : 5 mars 2022 11:00 AM Paris
+
+Participer à la réunion Zoom
+https://us05web.zoom.us/j/83934801517?pwd=K0N1ellYTmN6VGQvM1hZQVIxRU5Odz09
+
+ID de réunion : 839 3480 1517
+Code secret : R9gxiX
+
+
+
+---- On Fri, 04 Mar 2022 16:24:21 +0100 Christoph Pahl <christoph@statistiknachhilfe.ch> wrote ----
+
+
+super bis dann!
+
+---- On Fri, 04 Mar 2022 16:23:23 +0100 lisawindhofer.lw@gmail.com wrote ----
+
+Lieber Christoph,
+
+Morgen um 11 Uhr würde mir sehr gut passen.
+Ich würde mir dann nochmal alles morgen Vormittag anschauen.
+
+Liebe Grüße
+Lisa 
+
+On 4 Mar 2022, at 16:11, Christoph Pahl <christoph@statistiknachhilfe.ch> wrote:
+
+Liebe Lisa,
+
+OK, lasse ich erstmal so. Ich könnte die 2 Graphen immer noch kompakter machen indem ich sie in einem Quadrat übereinander plotte - das mache ich vlt. mal zwischendurch.
+
+Jetzt habe ich die Resistenzen pro Betrieb gezählt und in NResistenzen.xlsx rausgeschrieben. Ich schicke nochmal Resistenzen.xlsx, das kennst du schon. Diese 2 files kann man gut untereinander vergleichen.
+
+Resistenzen.xlsx enthält 4 Zeilen pro Betrieb (für die 4 Proben), die Probenresultate AMP...SMX und die unabhängigen Variablen WM.group...DIA.group (diese Namen sind in meinen letzten Plots ausgeschrieben))
+
+NResistenzen.xlsx enthält nur noch 1 Zeile pro Betrieb. In AMP...SMX habe ich die Resistenzen über die 4 Proben gezählt (also Werte 0 bis 4, das ist vlt. nicht so wichtig aber ein Zwischenresultat für die weitere Berechnung). In NRes habe ich dann über alle Antibiotika summiert ob es eine Resistenz in mindestens einer der 4 Proben gab (ist das genau wie du es dir vorstellst?). Und MultiR checkt dann ob das im Betrieb für mindestens 3 Antibiotika der Fall ist, also Multiresistenz vorliegt.
+
+Falls wir Grafen wollen sollten wir etwas diskutieren wie die aussehen. Ansonsten fehlen für die Arbeit i.w. nur noch Regressionen, und natürlich einige Diskussion.
+
+Ich könnte sprechen:
+- morgen Samstag um 11:00
+- nächste Woche Mo um 11:00 oder 18:30 oder später
+- nächste Woche Di-Fr um 11:00 oder 18:00 oder später
+
+Schönen  Gruss,
+Christoph
+
+
+---- On Wed, 02 Mar 2022 08:33:53 +0100 Lisa <lisawindhofer.lw@gmail.com> wrote ----
+
+Lieber Christoph,
+
+Danke für die Arbeit. Wenn die Verteilungen besser vergleichbar sind in 2 separaten Graphen, dann würde ich das auch so belassen.
+
+Liebe Grüße
+Lisa
+
+
+------------------------------------------------------------------------------------
+
+Hallo Lisa,
+
+jetzt habe ich einige Verschönerungen gemacht.
+
+Einfache plots: 
+- Abkürzungen ausgeschrieben
+- x-Achse konsistent
+
+Verteilungsplots: 
+- keine Varianz mehr rausgeschrieben
+- ersten plot (z.B. "IAC oder nicht") rausgenommen. Es bleiben also immer 2 plots (5 für husbandry System calves); wenn wir die nehmen, passe ich noch die y-Achse an und schreibe die Abkürzungen aus
+- farbigen plot gemacht, s. "IAC AMP farbig". Er enthält gerade 3 Gruppen, auch "NA" - das könnte ich rausnehmen. Die Balken sind momentan übereinander geplottet, da könnte ich weiterfieseln und sie nebeneinander plotten. Das Hauptproblem aber: Da das ein Balkenplot ist und nicht ein schön zusammenhängendes Histogramm wird man nie so schön 2 Verteilungen vergleichen können wie in 2 separaten plots
+
+Ich tendiere deshalb dazu, es bei 2 separaten plots zu belassen, was meinst du? 
+
+Nächste Woche mache ich die Gruppierung nach Betrieben und melde mich wieder. Dann können wir alles diskutieren.
+
+Schönes Wochenende!
+Christoph
+
+---------------------------------------------------------------------------------------------------
+
+Danke Lisa für unser Gespräch.
+
+Ich mache also erstmal Verschönerungen die dir bei der Interpretation helfen:
+- meine Abkürzungen wie "MY.group" in den plots ausschreiben
+- x-Achse konsistent in den letzten plots
+- aus den Verteilungsplots nehme ich den ersten (z.B. WM egal) raus und kombiniere die anderen 2 plots (z.B. WM/keine WM) in einen mit unterschiedlichen Farben
+
+Dann mache ich eine Tabelle/plotte ich die Anzahl Resistenzen pro Betrieb.
+
+Wir sprechen uns wieder nächste Woche
+
+Schönen Tag!
+Christoph 
+
+---------------------------------------------------------------------------------------------------
+
+Den möglichen Wertebereich 0-15 sollte man im Text erwähnen. Und ich behalte es auch im Kopf wenn ich Tabelle/Plot mache. Für die Analyse macht es aber keinen grossen Unterschied, da 5 Antibiotika gar keine Information liefern.
+
+
+---- On Wed, 23 Feb 2022 11:54:18 +0100 Lisa <lisawindhofer.lw@gmail.com> wrote ----
+
+Lieber Christoph,
+
+Danke für das Meeting heute. Ich bin nochmal alles durchgegangen und habe gesehen, dass gegen 15 Antibiotika getestet wurde, allerdings waren 5 davon komplett sensibel, also wiesen keine Resistenzen auf. Daher würde ich sagen, dass bei den Betrieben die Zahl an Resistenzen zwischen 0 und 15 theoretisch sein kann. Ist das für die Analyse wichtig?
+
+---- On Fri, 18 Feb 2022 22:08:22 +0100 Christoph Pahl <christoph@statistiknachhilfe.ch> wrote ----
+
+Hallo Lisa,
+
+anbei das neue Dokument mit den plots der numerischen und ordinalen Variablen. Das ging schneller als Verteilungen plotten, ich musste nur ein bisschen rechnen (y-Werte für die vorkommenden x-Werte aufaddieren), dann immer den gleichen plot. Vor allem musste ich mich nicht um so viele Problemchen kümmern, es gab weniger weil der plot eben einfacher ist. Bisschen was gibt's noch zu verschönern, z.B. immer den gleichen x-Bereich setzen.
+
+Die Interpretation finde ich auch einfacher, drum hab' ich's in eine paar Minuten auch für unsere bisherigen binären und nominale Variablen wiederholt. Und ich vergleiche kurz mit der Diskussion aus der Verteilung.
+
+Wahrscheinlich wär's besser wenn ich nicht neue Abkürzungen einführe (wie HSC für husbandry system calves)? Das hat sich so aus der Programmierung ergeben weil ich einen kurzen Variablennamen brauche, ohne Leerzeichen und Bindestrich - es wäre aber kaum Aufwand, das im plot auszuschreiben.
+
+Wie besprochen hab ich die Standardabweichungen rausgenommen und schicke das Excel file aus meiner internen Tabelle. Die neuen Variablen sind auch drin.
+
+Können wir uns am Montag oder Dienstag sprechen, um 11:00 oder ab 18:00?
+
+Schönes Wochenende,
+Christoph
+<Lisa-02-18.png>
+
+---------------------------------------------------------------------------------------------------
+
+Hallo Lisa,
+
+anbei das neue Dokument mit den plots der numerischen und ordinalen Variablen. Das ging schneller als Verteilungen plotten, ich musste nur ein bisschen rechnen (y-Werte für die vorkommenden x-Werte aufaddieren), dann immer den gleichen plot. Vor allem musste ich mich nicht um so viele Problemchen kümmern, es gab weniger weil der plot eben einfacher ist. Bisschen was gibt's noch zu verschönern, z.B. immer den gleichen x-Bereich setzen.
+
+Die Interpretation finde ich auch einfacher, drum hab' ich's in eine paar Minuten auch für unsere bisherigen binären und nominale Variablen wiederholt. Und ich vergleiche kurz mit der Diskussion aus der Verteilung.
+
+Wahrscheinlich wär's besser wenn ich nicht neue Abkürzungen einführe (wie HSC für husbandry system calves)? Das hat sich so aus der Programmierung ergeben weil ich einen kurzen Variablennamen brauche, ohne Leerzeichen und Bindestrich - es wäre aber kaum Aufwand, das im plot auszuschreiben.
+
+Wie besprochen hab ich die Standardabweichungen rausgenommen und schicke das Excel file aus meiner internen Tabelle. Die neuen Variablen sind auch drin.
+
+Können wir uns am Montag oder Dienstag sprechen, um 11:00 oder ab 18:00?
+
+Schönes Wochenende,
+Christoph
+
+---------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Danke für unser Gespräch.
+
+Mein kleine Zusammenfassung:
+- ich mache jetzt die plots für ordinale oder numerische Variablen. Statt der gesamten Verteilung plotte ich den numerischen Wert Anzahl Resistenzen
+- später plotte ich die binären Variablen in einen plot mit 2 Farben (husbandry... geht vielleicht auch noch mit mehr Farben) 
+- ich schreibe meine R-Tabelle raus als Excel. Das erspart Jonglieren mit 2 Tabellen
+- die Standardabweichung verfolgen wir nicht weiter
+- dann mache ich die Gruppierung nach Betrieben
+- später: Regressionen um kausale Zusammenhänge zu verstehen (t- oder Rangsummentest ist auch zu detailliert für unsere "kaputten" Verteilungen)
+- tu vertiefst dich ein bisschen in meine Diskussionen
+
+Ich schicke Ergebnisse Anfang nächster Woche, um sie dann zu diskutieren.
+
+Schönen Gruss,
+Christoph 
+
+---- On 31 Jan 2022, at 18:28, Christoph Pahl <christoph@statistiknachhilfe.ch> wrote: ----
+
+Liebe Lisa,
+
+die erwähnten restlichen Probleme mit den Plots habe ich behoben. Das sind jetzt wirklich sehr viele Plots, hauptsächlich wegen den vielen husbandry system calves - Gruppen. Allerdings ist der erste der drei plots wohl nur für mich interessant, und Nummer 2 und 3 könnte man in einen plot kombinieren, mit unterschiedlichen Farben.
+
+Ich warte jetzt mit allem bis wir uns wieder sprechen können.
+
+Alles Gute,
+Christoph
+
+---- On Sat, 29 Jan 2022 23:07:26 +0100 Christoph Pahl <christoph@statistiknachhilfe.ch> wrote ----
+
+Liebe Lisa,
+
+wie geht es dir?
+
+Ich habe mit den Gruppen im subject jetzt den Einfluss aller binären Variablen studiert.
+
+Und etwas an den plots gearbeitet (alle tick labels sind jetzt da. Das gab manchmal neue Probleme mit Stauchung und Abschneiden der plots - da behebe ich als nächstes sofort!).
+
+Ich könnte wie gesagt noch an der Gruppierung nach Farmen arbeiten, alles andere erfordert Diskussion.
+
+Gute Besserung!
+Christoph
+
+---- On Tue, 25 Jan 2022 20:59:13 +0100 Christoph Pahl <christoph@statistiknachhilfe.ch> wrote ----
+
+Liebe Lisa,
+
+das tut mir ja leid und ich hoffe du bist bald wieder gesund!
+
+Ich schicke also nächstens die Analysen zu "Q9 other Livestock" und "Q12 illanimals in calving box".
+
+Alles weiter erfordert etwas Diskussion, mit 2 Ausnahmen:
+1) die vereinzelten Problem mit x-tick labels lösen
+2) Gruppierung nach Betrieben - das war eine deiner ersten Ideen, um dann zu sehen welche Betriebe multiresistent sind
+
+Wenn das OK ist mache ich dann also damit weiter bis du wieder gut diskutieren kannst
+
+Gute Besserung !
+(und natürlich: bitte gut ausruhen, ich mache da immer Fehler) 
+
+Christoph
+
+---- On Tue, 25 Jan 2022 13:24:43 +0100 Lisa Windhofer <lisawindhofer.lw@gmail.com> wrote ----
+
+Lieber Christoph,
+
+Vielen Dank für deine Auswertung. Sorry für die verspätete Antwort, ich bin leider krank und hab covid deswegen kann es sein das ich auf die ein oder andere Nachricht etwas später antworte.
+
+Liebe Grüße
+Lisa
+
+On Mon, 24 Jan 2022, 9:28 pm Christoph Pahl, <christoph@statistiknachhilfe.ch> wrote:
+
+Hallo Lisa,
+
+diese Gruppen sind jetzt kontrolliert und etwas diskutiert. Eine tiefgründige Diskussion kann ich nicht machen da ich nicht weiss was diese Gruppen bedeuten. Ich zählte aber (über alle Antibiotika) die Gruppen mit grössten und kleinsten Resistenzen und kann damit eine gewisse Aussage treffen (im Text nach den HSC plots).
+
+Jetzt mache ich die restlichen binären Variablen. Vor den numerischen sollten wir uns kurz sprechen um die abhängige Variable zu klären (und noch mehr folgende Schritte notiere ich jetzt lieber zentral im Text als in emails).
+
+Schönen Gruss
+Christoph
+
+----------------------------------------------------------------------------------------------
+
+Hallo Lisa,
+
+ich war am Donnerstag bisschen in falsche Zeilen gerutscht: Q9 und Q12 sind binär, Q20 6-wertig nominal; Q6, Q7, Q13 numerisch und Q17 6-wertig ordinal. 
+
+Ich habe jetzt Q20 - das ist noch ähnlich wie binär aber die Diskussion ist aufwendig weil es so viele Möglichkeiten gibt. Was erwartest du für Effekte auf die Resistenz? Ich kontrolliere am Montag nochmal, dann schicke ich's dir (hänge hier erstmal das Rmd an, das ist ein gutes internet-backup).
+
+Dann die binären Variablen (schnell mit dem allgemeinen framework das ich jetzt habe), dann die numerischen/ordinal (da müssen wir dann erst eine eindeutige abhängige Variable festlegen da ich eben nicht 1000 plots/deskriptive Analysen einer Verteilung machen kann - nehmen wir den Mittelwert? die Anzahl der Resistenzen? der Multiresistenzen?)
+
+Schönen Sonntag,
+Christoph
+
+----------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Super, vielen lieben Dank!
+Liebe Grüße
+Lisa
+
+----------------------------------------------------------------------------------------------
+
+Danke Lisa,
+
+meine kurze Zusammenfassung:
+
+WM oder nicht lohnt (momentan) keine eingehendere Untersuchung, du schickst mir aber noch die asugefüllten Original-Fragebögen.
+
+Wir konzentrieren uns auf andere Variablen:
+Q6, Q7, Q9,  Q12, Q13a, Q17, Q20.
+Ich fange mit den binären an (Q6, Q7) weil diese keine Aenderung im Programm erfordern. Dann die 6-wertigen (Q17, Q20; kleine Aenderung) und dann die numerischen (Q9, Q12, Q13a; abweichende Struktur im Programm).
+
+Da 59 Betriebe nicht so so viele sind, untersuche ich erstmal nur eine Variable alleine (mit der gewonnen Erkenntnis über Anzahlen und Ergebniss lohnt sich vielleicht später eine Analyse von mehreren Variablen simultan).
+
+Ich schicke das Ergebnis mit jeder neuen Variablen sobald ich es kontrolliert habe und wir sprechen uns wenn nötig.
+
+Und am Ende jeder Woche schicke ich einen "Kontoauszug".
+
+Bis dann,
+Christoph
+
+On 20 Jan 2022, at 10:57, Christoph Pahl <christoph@statistiknachhilfe.ch> wrote: ------------
+
+gut, bis 17:00!
+
+---- On Thu, 20 Jan 2022 10:54:48 +0100 lisawindhofer.lw@gmail.com wrote ----
+
+Hey, 
+
+Ja 17 Uhr passt sehr gut. Sorry für die späte Antwort, bei mir ist die mail leider wieder im spam untergegangen.
+Liebe Grüße
+Lisa
+
+On 20 Jan 2022, at 10:52, Christoph Pahl <christoph@statistiknachhilfe.ch> wrote:
+
+sorry Lisa,
+
+bei mir ginge erst ab 17:00 oder morgen 11:00. Klappt das?
+
+Gruesse, Christoph
+
+
+
+---- On Thu, 20 Jan 2022 08:22:11 +0100 lisawindhofer.lw@gmail.com wrote ----
+
+Hallo Christoph,
+
+Danke für deine Nachricht. 1 ist ganz sicher waste milk und 2 ist no WM. Ich habe es selbst codiert, aber das ist sehr merkwürdig. Hättest du heute Vormittag zeit für ein Meeting?
+
+Liebe Grüße
+Lisa
+
+On Wed, 19 Jan 2022, 5:11 pm Christoph Pahl, <christoph@statistiknachhilfe.ch> wrote:
+Hallo Lisa,
+
+anbei meine Arbeit, .Rmd und PDF.
+
+Im Vergleich der Mittelwerte sind Resistenzen ohne Waste Milk tendenziell höher! Das könnte sich theoretisch ändern mit dem Rangsummentest oder ausschliesslicher Zählung von Resistenzen oder Multiresistenzen - aber das ist sehr unwahrscheinlich. 
+
+Deshalb hab ' ich dieses Ergebnis für 2 Antibiotika per Hand aus den Excel sheets nachgeprüft. Ist wirklich 1=Waste Milk und 2=No Waste Milk? Kann ich die Original-Fragebögen sehen? Wir müssen das diskutieren und bestmöglich checken bevor wir weitermachen.
+
+Schönen Gruss,
+Christoph
+
+
+---- On Tue, 18 Jan 2022 22:17:02 +0100 Christoph Pahl <christoph@statistiknachhilfe.ch> wrote ----
+
+Liebe Lisa,
+
+jetzt habe ich mehr und schönere Graphen, deskriptive Statistiken und eine erste Kontrolle des Einflusses der Waste Milk.
+
+Können wir uns morgen sprechen um 18:00?
+
+Schönen Gruss,
+Christoph
+
+
+---- On Fri, 14 Jan 2022 17:36:15 +0100 Lisa Windhofer <lisawindhofer.lw@gmail.com> wrote ----
+
+Lieber Christoph,
+
+Vielen Dank für die Zusammenfassung.
+Der Rangsummentest wäre toll wenn das zusätzlich noch möglich ist.
+Ich freue mich auf deine Rückmeldung nächste Woche.
+
+Liebe Grüße
+Lisa
+
+-------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallo Lisa,
+
+danke für deine Geduld. Meine kleine Zusammenfassung:
+
+Es werden für die Antibiotika nur bestimmte Mengen ausprobiert - deswegen sind diese Variablen ordinal und meine Graphen sind Balkendiagramme (nicht Histogramme). Wenn ich's gerade richtig gesehen habe werden die Werte immer verdoppelt z.B. 0.25, 0.5, 1, 2 ... auch das spricht klar für eine logarithmische x-Achse.
+
+"<= X" heisst "komplett sensibel" und ">Y" heisst resistent
+
+Ich mache :
+1. kleine Verschönerungen der plots: logarithmische Achsen, Achsen WM/no WM gleich skaliert zur besseren Vergleichbarkeit, 3. plot (WM+no WM) raus
+2. Ich gehe die Graphen durch um schon mal eine quantitative Vorstellung von WM auf Resistenzen zu haben
+3. Intern arbeite ich mit einer R-Tabelle mit zusätzlicher Spalte WM = 1, 2. Ich drucke diese auch aus um Ideen von WM auf Resistenzen zu fördern
+4. Deskriptive Analyse, wie besprochen oft nur Grenzen (oder unmöglich), da wir keine exakte Werte haben
+
+Ich melde mich mit diesen Resultaten früh nächste Woche.
+
+Wir haben folgende Auswertungen angesprochen (multiresistent heisst >= 3 Resistenzen):
+- Welche Betriebe sind multiresistent? Vor diese Frage passt gut die von dir gewünschte Gruppierung der deskriptiven Analyse nach Betrieben statt WM-Gruppen
+- ist der Rangsummentest zum Vergleich der Verteilungen der einzelnen Antibiotikaresistenzen WM/no WM noch gewünscht? Er wäre gut vor folgendem Punkt, da er detaillierter is
+- korreliert WM/no WM mit Multiresistenz?
+- "den Fragebogen auswerten" hatten wir als eigenen Punkt diskutiert, aber es ist dasselbe wie "die Excel files auswerten", da alle Information aus den Bögen in den Excel files ist
+
+Schönen Gruss,
+Christoph
+
+----------------------------------------------------------------------------
+
+bin gleich da!
+
+
+
+---- On Fri, 14 Jan 2022 16:00:02 +0100 christoph@statistiknachhilfe.ch wrote ----
+
+sorry Lisa, 
+
+mir ist gerade der computer abgestuerzt. Es koennte 10min dauern bis ich da bin....
+
+
+
+---- On Fri, 14 Jan 2022 15:18:13 +0100 lisawindhofer.lw@gmail.com wrote ----
+
+Super danke, bis gleich!
+
+Lisa Windhofer is inviting you to a scheduled Zoom meeting.
+
+Topic: Lisa Windhofer's Zoom Meeting
+Time: Jan 14, 2022 04:00 PM Zurich
+
+Join Zoom Meeting
+https://zoom.us/j/95636612077?pwd=QUZHM1IyTEFKQzFPN0lUS0JmVUJvQT09
+
+Meeting ID: 956 3661 2077
+Passcode: 5fP830
+
+
+On 14 Jan 2022, at 14:57, Christoph Pahl <christoph@statistiknachhilfe.ch> wrote:
+
+Ok bis gleich!
+
+
+
+---- On Fri, 14 Jan 2022 14:09:30 +0100 lisawindhofer.lw@gmail.com wrote ----
+
+Hallo Christoph,
+
+Vielen Dank für deine Antwort. Heute um 16 Uhr wäre gut möglich!
+Wäre das auch für dich noch möglich?
+
+Liebe Grüße
+Lisa
+
+On 13 Jan 2022, at 21:55, Christoph Pahl <christoph@statistiknachhilfe.ch> wrote:
+
+Hallo Lisa,
+
+hier mehr Plots, jeweils waste milk, beide Gruppen (zum Vergleich mit gestern), keine waste milk.
+
+Es wäre gut uns wieder zu sprechen um offene Fragen zu klären:
+- für die plots v.a.: logarithmische Achsen? Dann kann ich noch bisschen mehr plotten
+- sonstige Verschönerungen
+- für die deskriptive Analyse: Was bedeuten die Zahlen und wie wurden sie gemessen?
+- was bedeuten die Grenzen? Ggf. kann ich sie auch einfach ignorieren, das hängt von der Interpretation ab
+
+Ginge morgen 11:00 oder ab 16:00?
+
+Schönen Gruss,
+Christoph
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ich habe die wichtigste Frage vergessen: ist alles verständlich und wie gewünscht?
+
+----------------------------------------------------------------------------------
+
+Hallo Lisa,
+
+anbei meine erste Version der Graphen. Zur einfachen Entwicklung habe ich sie heute für beide Gruppen zusammen gemacht und bin von AMP bis FOT gekommen. Morgen mache ich den Rest, dann trenne ich waste milk / no waste milk
+
+Ich schicke:
+- Histos+Deskriptiv.Rmd : R-notebook für rstudio
+- Histos+Deskriptiv.pdf : PDF davon
+
+Für die vollständige Version schicke ich auch die Grafikfiles einzeln und ein automatisch generiertes word.
+
+Sind Achsenbeschriftungen und Titel korrekt? Natürlich werde ich den Gruppennamen noch reinsetzen: "Waste Milk" / "Keine Waste Milk". Schreibst du deine Arbeit auf Deutsch? Es gibt noch mehr zu verbessern, z.B. bie nur 2 Balken (TGC etc.) sollte das rechte Bin auch eine Zahl tragen. Das ist ein so spezielles Problem dass ich's lieber nach der Gruppenaufteilung mache.
+
+Eine Frage um Zahlen und Graphen korrekt zu interpretieren: Warum sind denn die Zahlen so ungenau? Meist ganzzahlig, sonst selten mehr als eine "gültige" (d.h. ungleich 0) Nachkommastelle. Hätten sie im Prinzip, mit einem besseren Analysegerät, besser gemessen werden können?
+
+Ales wurde deutlich komplizierter als gedacht, weil viele Wert nur durch Grenzen "<=X" oder ">Y" gegeben sind. Diese Grenzen muss ich in ein passendes numerisches Bin füllen, Plotten und dann wieder als Grenze beschriften, dabei aufpassen dass R nichts weglässt. Ich habe gecheckt, das diskutierte "Advanced R" (ggplot library) hätte mir da auch keine Arbeit gespart.
+
+Grenzen statt Zahlen gibt auch Probleme mit den deskriptiven Statistiken: Mittelwert und Standardabweichung werden aus allen Werten berechnet. Aber wir haben nicht alle Werte, sondern manche nur als Grenzen. Deshalb kann ich Mittelwert und Standardabweichung wieder nur durch Grenzen angeben:
+- für die untere Grenze setze ich alle "<=X" Werte auf 0 (es gibt keine negativen Messungen, korrekt?) und alle ">Y" Werte auf Y+0.000001 oder Y+1 ? Das hängt von deiner Antwort auf obige Frage ab (nochmal konkreter gefragt: heisst ">8" es gibt nur Werte ab 9, oder vielleicht schon 8.1 ?)
+- für die obere Grenze setze ich alle "<=X" Werte auf X. Wenn es keine obere Grenze gibt (z.B CHL > 64) kann ich keine obere Grenze für den Mittelwert bestimmen.
+
+ähnlich für die Standardabweichung: 
+- sie wird am kleinsten für alle "<=X" Werte auf X und alle ">Y" Werte wie oben diskutiert (dann ist die Verteilung die schmälste mit den Messungen verträgliche Verteilung)
+- sie wird am grössten für alle "<=X" Werte auf 0, es darf wieder keine ">Y" Werte geben, sonst ist eine beliebig breite Verteilung mit der Messung verträglich!
+ 
+Der Median hat dieses Problem evtl. nicht, man läuft nur die x-Achse entlang und schaut wann man die Hälfte der Werte hat. Wenn weniger als die Hälfte "<=" sind und weniger als die Hälfte ">", kann man diesen Wert genau bestimmen. Im anderen Fall (z.B. MERO, fast alle <= 0.03) weiss man's wieder nicht genau.
+
+Und diese Grenzen werden wieder ähnliche Probleme geben mit dem Rangsummentest und ich habe einen ähnlichen Lösungsvorschlag, das diskutiere ich dann. Die Verteilungen sind bei weitem nicht normal (das wird sich bei Trennung in die 2 Gruppen nicht ändern) und wir können nicht den t-Test verwenden.  
+
+Weitere Fragen sind in Histos+Deskriptiv.pdf .
+
+Schöne Grüsse,
+Christoph
+
+---- On Tue, 11 Jan 2022 19:15:43 +0100 Lisa <lisawindhofer.lw@gmail.com> wrote ----
+
+Ja genau richtig.
+Super, ja perfekt das hört sich gut an.
+
+Danke für Alles & schönen Abend,
+Lisa
+
+On 11 Jan 2022, at 19:14, Christoph Pahl <christoph@statistiknachhilfe.ch> wrote:
+
+Danke Lisa,
+also in excel file "coded_data_questionnaire pilot12.xlsx", sheet data habe ich die 2 Spalten
+
+
+Farm ID
+WM group
+
+
+die geben mir für jede Farm ID die WM Gruppe.
+
+Die zusätzliche Darstellung/Rechnung ist nicht sehr viel anders: statt nach WM-Gruppen gruppiere ich da nach Farm-ID. Das wäre nur eine kleine änderung im Programm, ich möchte aber die WM-Gruppierung gerne erst diskutieren um evtl. Probleme zu vermeiden.
+
+Schönen Gruss,
+Christoph 
+
+---- On Tue, 11 Jan 2022 19:06:16 +0100 Lisa <lisawindhofer.lw@gmail.com> wrote ----
+
+Hallo Christoph,
+
+Grundsätzlich ist es so dass von Betrieb 4, alle 4 Proben (A1, A2, B1, B2 es handelt sich dabei um 4 verschiedene Umweltproben von dem selben Betrieb) davon no WM sind, da ein Betrieb immer nur eins von beiden sein kann (entweder er ist in der Gruppe, die die WM vertränken oder in der Gruppe die sie nicht vertränken). Ob ein Betrieb WM oder no WM ist, ist aus dem Excel sheet coded data questionnaire zu entnehmen, da sind alle Betriebe aufgelistet und welcher der beiden Gruppe sie zugehörig sind.
+Alles andere ist korrekt. 
+Ist es zusätzlich auch möglich für jeden Betrieb (mit den je 4 Proben) auszurechnen oder graphisch darzustellen, damit ich sehen kann gegen welches Antibiotikum welcher Betrieb resistent ist? Wenn du da einen Betrieb vorrechnen könntest, dann ich nach dem Beispiel alle anderen Betriebe darstellen/rechnen, dann wäre es für dich nicht allzu viel Arbeit.
+
+Vielen Dank im Voraus!
+Liebe Grüße
+Lisa
+
+----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallo Lisa,
+
+danke für unser Gespräch. Meine kurze Zusammenfassung:
+
+Ich untersuche erst mal die Antibiotikarestenzen, plotte Histogramme und berechne Mittelwerte und Standarabweichungen, und Mediane ausser die Verteilungen sind sehr symmetrisch. Die Daten sind in "MIC_E. coli environment_L Windhofer_final.xls" Spalten AMP bis SMX. Spalte "Patienten | Patienten-/Tierbezeichnung1" enthält wichtige Information, z.B
+
+  4B1 : Betrieb 4, Probe B, waste milk
+  4B2 : Betrieb 4, Probe B, keine waste milk
+
+- habe ich das richtig verstanden?
+
+Dann sehen wir ob wir den t-Test brauchen oder den Rangsummentest.
+
+Anschliessend diskutieren wir die Fragebogenauswertung.
+
+Schönen Gruss,
+Christoph
+
+  
+
+----------------------------------------------------------------------------------------
+
+Hallo Christoph, 
+
+Sorry für die verspätete Antwort, die Nachricht ist leider komplett in meinem Spam Ordner untergegangen.
+Also ich habe einerseits Antibiotikaresistenzdaten die ausgewertet gehören gegen welche Antibiotika die einzelnen Betriebe (Farm ID) resistent sind und dann die beiden Gruppen waste milk (1) und no waste milk (2) miteinander vergleichen (MIC E.coli Dokument), und andererseits habe ich noch einen Fragebogen der ausgewertet gehört, wo wiederum die verschiedenen Managementfragen v.a. zwischen den Gruppen WM und no WM verglichen gehören. Farm ID 30 wurde aus dem Datensatz gestrichen, da sie nicht in die Studienkriterien passen.
+Wie schnell wäre denn eine Auswertung möglich? Grundsätzlich sollte ich nur eine deskriptive Statistik machen und die beiden Gruppen mittels T-Test vergleichen und die Daten dann noch graphisch darstellen.
+Ich habe einen gewissen Zeitdruck, daher wäre mir eine Auswertung so schnell wie möglich am liebsten, wenn das irgendwie möglich ist.
+Ich freue mich auf eine Rückmeldung! 
+
+Liebe Grüße
+Lisa
+
+----------------------------------------------------------------------------------------
+
+On 2 Dec 2021, at 09:59, Christoph Pahl <christoph@statistiknachhilfe.ch> wrote:
+
+Hallo Lisa,
+
+gerne würde ich weiterhelfen! Ich bin promovierter Physiker und arbeite mit Statistik in allen möglichen Bereichen. Hauptsächlich mit R, aber auch mt SPSS.
+
+Könntest du mir bitte deine Arbeit schicken und deine weiteren Vorstellungen dazu? Ich studiere das und dann sollten wir uns sprechen um das Vorgehen zu planen.
+
+Besten Dank,
+Christoph
+
+----------------------------------------------------------------------------------------
+
+============ Forwarded Message ============
+From : lisawindhofer.lw@gmail.com
+To : info@statistiknachhilfe.ch
+Date : Wed, 01 Dec 2021 11:59:55 +0100
+Subject : Frage zu Statistiknachhilfeangebot
+============ Forwarded Message ============
+
+Liebe Damen und Herren, 
+
+Ich suche einen Nachhilfelehrer für meine Datenanalyse/desktiptive Statistik meiner PhD-Studie. 
+Ich bin Tierärztin und habe meinen PhD begonnen an der Uni Bern, allerdings habe ich nur einen sehr oberflächlichen Statistikbackground und erhalte leider zu wenig Hilfe von meinen Betreuern. 
+Ich muss die Statistik mit R durchführen, habe bis jetzt allerdings nur mit SPSS etwas gearbeitet. 
+Ich habe eine einfache Umfrage in Interview format gemacht und sollte diese nun auswerten inklusive Diagramme in R. Des Weiteren habe ich auch Proben gesammelt und mit diesen sollen deskriptive Statistiken gerechnet werden und auch 2 Gruppen miteinander verglichen werden.
+
+Könntet Ihr mir dabei weiterhelfen? 
+Vielen Dank im Voraus! 
+
+Freundliche Grüße 
+Lisa Windhofer
+
+
+3 Attachments
+Download as Zip
+Add To
+MIC_E. coli environment_L Windhofer_final
+.xls
+DownloadView128 KB
+coded_data_questionnaire pilot12
+.xlsx
+DownloadView43.7 KB

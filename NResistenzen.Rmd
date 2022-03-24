@@ -1,0 +1,208 @@
+---
+title: "Anzahl Resistenzen und einfache plots"
+author: ''
+date: "23.03.2022"
+output:
+  pdf_document:
+    keep_tex: yes
+geometry: margin=0.5cm
+---
+
+Es darf kein Verzeichnis NResistenzen_files/ geben, sonst werden nicht die neuen plots gespeichert!
+
+# Bibliotheken laden, Hilfsfunktion
+
+```{r, warning=F, error=F, message=F}
+library(ggplot2)     # moderne plots
+
+debug <- T           # debug printout
+debug <- F           # kein debug printout
+Log <- function(string) {
+  if(debug){print(string)}  
+}
+```
+
+# MY Schicht Festlegen
+
+Die letzte Zeile zählt!
+
+```{r}
+Schicht <- "U"         # Un-stratified
+Schicht <- "LE8000"    # Less than or Equal to 8000
+Schicht <- "GT8000"    # Greater Than 8000
+```
+
+# Resistenzen.Rmd erzeugte Resistenzen[Schicht].csv, dieses einlesen
+
+Und evtl. ansehen
+
+```{r}
+FileIn <- paste( "Resistenzen",Schicht,".csv" , sep="" )  # Fileout ist nur N davorgehängt
+Resistenzen <- read.csv(FileIn)
+
+# csv schreiben fügt vorne Index-Spalte an; diese entfernen :
+Resistenzen[,1] <- NULL                      
+
+if(debug){View(Resistenzen)}
+```
+
+# Resistenzen pro Betrieb
+
+Resistenzen pro Betrieb in neuer Tabelle "NResistenzen" zählen, Multirestenz dokumentieren und als NResistenzen.csv ausschreiben
+
+```{r}
+ResRow  <- nrow(Resistenzen)  # Zeilen Resistenzen : 4 pro Betrieb
+NResRow <- ResRow/4           # Zeilen NResistenzen : 1 pro Betrieb
+NAntib  <- 15                 # wir untersuchen 15 Antibiotika (wird von Resistenzen.Rmd so aus 2 Excel files eingelesen)
+
+NResistenzen <- Resistenzen[0,]                          # header wie"Resistenzen"
+for(line in 1:NResRow){                                  # 1 bis 60, aber 30 fehlt
+  i <- (line - 1)*4 + 1
+  NResistenzen[line,] <- Resistenzen[(line - 1)*4 + 1,]  # WM.group etc. kopieren
+  NResistenzen[line,2:(NAntib+1)] <- 0                   # aber Antibiotika auf 0 setzen : hier später Resistenzen zählen
+}
+for(col in 2:(NAntib+1)){
+  NResistenzen[,col] <-  as.numeric(NResistenzen[,col])  # muss immer noch in type double konvertieren
+}
+if(debug){View(NResistenzen)} 
+
+# für jedes Antibiotikum Resistenzen über die 4 Proben zählen, also mögliche Werte 0-4 :
+for(i in 1:ResRow){                             # Liniennummer (Betriebe in 4er Gruppen) für dataframe Resistenzen
+  Log(paste("i=",i))
+  
+  line <- floor((i-1)/4)+1                      # Liniennummer für dataframe NResistenzen
+  
+  for(j in 2:(NAntib+1)){                            # Spaltennummer: Antibiotikum
+
+    if(substr(Resistenzen[i,j],1,1)==">"){   # wenn Resistenz
+      Log(paste("  NResistenzen[",line,j,"]=",NResistenzen[line,j],typeof(NResistenzen[line,j]) ))
+      NResistenzen[line,j] <- NResistenzen[line,j] + 1  # gef. Resistenz zählen
+} } } 
+
+NResistenzen$NRes   <- rep(0,NResRow)  # neue Spalte, zählt für jeden Betrieb Resistenzen über Antibiotika; erstmal 0
+NResistenzen$MultiR <- rep(F,NResRow)  # neue Spalte, dokumentiert für jeden Betrieb Multiresistenz; erstmal False
+for(line in 1:NResRow){              # 1 bis 60, aber 30 fehlt
+  for(col in 2:(NAntib+1)){
+    if(NResistenzen[line,col] > 0){
+      NResistenzen[line,"NRes"] <- NResistenzen[line,"NRes"]+1  # Resistenz zählen
+    }
+  }
+  if(NResistenzen[line,"NRes"] >= 3){  # Multiresistenz heisst mind. 3 Resistenzen
+    NResistenzen[line,"MultiR"] <- T
+  }
+}
+if(debug){View(NResistenzen)}
+write.csv(NResistenzen, paste( "N", FileIn , sep="" ))
+```
+
+# Numerische und Ordinale Unabhängige Variablen
+
+```{r}
+graphisch2 <- function(gruppe, join, antibiotikum) {
+  group <- Resistenzen[,gruppe ] 
+  antib      <- Resistenzen[,antibiotikum ]
+
+  X <- c()
+  Y <- c()
+  for(i in 1:ResRow){                      # Liniennummer für dataframe Resistenzen
+    x <- as.numeric(group[i])              # [,na.rm=TRUE) hilft nicht weil's "NA" ist, nicht NA]
+    if(substr(antib[i],1,1) == ">"){       # wenn Resistenz
+      
+      pos <- match(x,X)                   
+      if(is.na(pos)){
+        X <- c(X,x)    # faster: pre-allocate+assign,
+        Y <- c(Y,1)    # in this way vector copied in every iteration
+      } else {
+        Y[pos] <- Y[pos] + 1
+      }
+    }
+  }  
+
+  df <- data.frame(X,Y)
+  ylab <- paste(antibiotikum,"- Resistenzen")
+  
+  if( gruppe == "WM.group" ){xlab <- "Wastemilk-Gruppe"}
+  if( gruppe == "OLS.group"){xlab <- "Other LiveStock-Gruppe"}            
+  if( gruppe == "IAC.group"){xlab <- "Ill Animals in Calving box-Gruppe"}
+  ### Neue binäre hier dazufügen ###
+
+  if( gruppe == "HSC.group"){xlab <- "Husbandry System Calves-Gruppe"}   
+  ### Neue nominale hier dazufügen ###
+  
+  if( gruppe == "MY"       ){xlab <- "meanMY/cow"}
+  if( gruppe == "SCC"      ){xlab <- "mean SCC/11mo"}          
+  if( gruppe == "CBC"      ){xlab <- "calvingbox_clean"}    
+  if( gruppe == "DIA"      ){xlab <- "IN_diarrhea<30d"}               
+  ### Neue numerische hier dazufügen ###
+
+  min <- min(as.numeric(Resistenzen[,gruppe]), na.rm=T)
+  max <- max(as.numeric(Resistenzen[,gruppe]), na.rm=T)
+  
+  puffer <- (max - min)/20     
+  min <- min - puffer       # links und rechts 5% freier Platz
+  max <- max + puffer
+  
+  print( ggplot(df, aes(X, Y)) + 
+    geom_point() +
+    xlim(min,max) +
+    xlab(xlab) + ylab(ylab)  + 
+    ggtitle(paste("Anzahl", ylab, join,xlab))   
+  )
+}
+```
+
+# Plot Anzahl der Resistenzen für verschiedene Antibiotika, numerische Variablen
+
+* MERO, AMI, TGC, TAZ COL, keine Resistenzen
+* FOT , AZI nur eine (die AZI-CBC und AZI-IAC plots sind korrekterweise leer: Diese Resistenz hat NA für CBC und IAC)
+
+```{r, warning=F}
+#   NA warnings interessieren nicht
+ 
+numerisch <- c("MY","SCC","CBC","DIA")     # untersuchte numerische Variablen  ### neue numerische hier hinzufügen ###
+for( group in numerisch) {   
+
+  for( antib in c("AMP","CIP","AZI","GEN","FOT","CHL","NAL","TET","TMP","SMX") ){ 
+  
+    graphisch2(group,"für geg.",antib)  
+    print("")
+  } 
+  print("--------------------------------------------------------")
+}
+```
+
+Ungeschichtet: Resistenzen scheinen tendenziell zu 
+
+* steigen mit MY.group 
+* fallen mit SCC.group, CBC.group
+* ? mit DIA.group
+
+Eine Regression sagt mehr.
+
+# Binäre und Nominale Unabhängige Variablen
+
+## Anzahl Resistenzen
+
+```{r, warning=F}
+# NA warnings interessieren nicht
+
+# untersuchte binäre und nominale Variablen 
+
+### neue binäre oder nominale hier dazufügen : ###
+bin_nom <- c("WM.group", "OLS.group","IAC.group",   "HSC.group")       
+
+for( group in bin_nom ){
+  for( antib in c("AMP","CIP","AZI","GEN","FOT","CHL","NAL","TET","TMP","SMX") ){
+    #graphisch2(group,"für geg. Wert von",antib)  
+    graphisch2(group,"für geg.",antib)  
+    print("")
+  } 
+  print("--------------------------------------------------------")
+}
+```
+
+Ungeschichtet: Resistenzen scheinen zu
+
+* steigen mit MY (das sahen wir schon aus den Verteilungen), OLS.group, tendenziell auch IAC.group 
+* fallen bis HSC.group = 3, dann wieder etwas zu steigen (die Steigung von $4\mapsto5$ scheint einleuchtend, da 5=0+2 und 4=1+2; man könnte $4\leftrightarrow 5$ im plot vertauschen)
+* jedenfalls sind die Trends klarer als aus den Verteilungen. Eine Regression sagt nochmal mehr
