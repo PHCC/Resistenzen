@@ -1,14 +1,12 @@
 ---
-title: "Anzahl Resistenzen und einfache plots"
+title: "Number of Resistances and Simple Plots"
 author: ''
-date: "23.03.2022"
+date: "24.03.2022"
 output:
   pdf_document:
     keep_tex: yes
 geometry: margin=0.5cm
 ---
-
-Es darf kein Verzeichnis NResistenzen_files/ geben, sonst werden nicht die neuen plots gespeichert!
 
 # Bibliotheken laden, Hilfsfunktion
 
@@ -119,14 +117,14 @@ graphisch2 <- function(gruppe, join, antibiotikum) {
   }  
 
   df <- data.frame(X,Y)
-  ylab <- paste(antibiotikum,"- Resistenzen")
+  ylab <- paste(antibiotikum,"- Resistances")
   
-  if( gruppe == "WM.group" ){xlab <- "Wastemilk-Gruppe"}
-  if( gruppe == "OLS.group"){xlab <- "Other LiveStock-Gruppe"}            
-  if( gruppe == "IAC.group"){xlab <- "Ill Animals in Calving box-Gruppe"}
+  if( gruppe == "WM.group" ){xlab <- "Wastemilk Group"}
+  if( gruppe == "OLS.group"){xlab <- "Other LiveStock Group"}            
+  if( gruppe == "IAC.group"){xlab <- "Ill Animals in Calving Box Group"}
   ### Neue binäre hier dazufügen ###
 
-  if( gruppe == "HSC.group"){xlab <- "Husbandry System Calves-Gruppe"}   
+  if( gruppe == "HSC.group"){xlab <- "Husbandry System Calves Group"}   
   ### Neue nominale hier dazufügen ###
   
   if( gruppe == "MY"       ){xlab <- "meanMY/cow"}
@@ -146,8 +144,9 @@ graphisch2 <- function(gruppe, join, antibiotikum) {
     geom_point() +
     xlim(min,max) +
     xlab(xlab) + ylab(ylab)  + 
-    ggtitle(paste("Anzahl", ylab, join,xlab))   
+    ggtitle(paste("Number of", ylab, join,xlab))   
   )
+  ggsave(paste(gruppe, antibiotikum,".png"))
 }
 ```
 
@@ -156,7 +155,7 @@ graphisch2 <- function(gruppe, join, antibiotikum) {
 * MERO, AMI, TGC, TAZ COL, keine Resistenzen
 * FOT , AZI nur eine (die AZI-CBC und AZI-IAC plots sind korrekterweise leer: Diese Resistenz hat NA für CBC und IAC)
 
-```{r, warning=F}
+```{r numerical_variables, warning=F}
 #   NA warnings interessieren nicht
  
 numerisch <- c("MY","SCC","CBC","DIA")     # untersuchte numerische Variablen  ### neue numerische hier hinzufügen ###
@@ -164,7 +163,7 @@ for( group in numerisch) {
 
   for( antib in c("AMP","CIP","AZI","GEN","FOT","CHL","NAL","TET","TMP","SMX") ){ 
   
-    graphisch2(group,"für geg.",antib)  
+    graphisch2(group,"for given",antib)  
     print("")
   } 
   print("--------------------------------------------------------")
@@ -183,7 +182,7 @@ Eine Regression sagt mehr.
 
 ## Anzahl Resistenzen
 
-```{r, warning=F}
+```{r binary_or_nominal_variables, warning=F}
 # NA warnings interessieren nicht
 
 # untersuchte binäre und nominale Variablen 
@@ -193,8 +192,7 @@ bin_nom <- c("WM.group", "OLS.group","IAC.group",   "HSC.group")
 
 for( group in bin_nom ){
   for( antib in c("AMP","CIP","AZI","GEN","FOT","CHL","NAL","TET","TMP","SMX") ){
-    #graphisch2(group,"für geg. Wert von",antib)  
-    graphisch2(group,"für geg.",antib)  
+    graphisch2(group,"for given",antib)  
     print("")
   } 
   print("--------------------------------------------------------")
