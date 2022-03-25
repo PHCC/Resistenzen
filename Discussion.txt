@@ -1,4 +1,12 @@
 Liebe Lisa,
+
+um die plots wiederzufinden brahcte das umbenennen der code chunks nicht sehr viel. Drum schreibe ich sie jetzt doch explizit raus, es genügt also "Restart R and Run all Chunks" um die plots zu erzeugen. 
+
+Das Program legt dann (falls nötig) z.B. das directory "plots_LE8000" und schreibt darin files wie z.B. LE8000_HSC.group_SMX.png
+
+--------------------------------------------------------------------------------------------
+
+Liebe Lisa,
 danke für unser Gespräch.
 
 Du schickst mir also ggf. Code updates (zusätzliche Variablen) die du behalten willst, damit ich sie in meinen code einfüge.

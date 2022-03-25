@@ -1,0 +1,257 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Resistenzen.Rmd : Vorbereitung Daten},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=0.5cm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Resistenzen.Rmd : Vorbereitung Daten}
+\author{}
+\date{\vspace{-2.5em}12.03.2022}
+
+\begin{document}
+\maketitle
+
+\hypertarget{bibliotheken-laden-hilfsfunktion}{%
+\section{Bibliotheken laden,
+Hilfsfunktion}\label{bibliotheken-laden-hilfsfunktion}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(xlsx)                 }\CommentTok{# Um Excel files einzulesen}
+\KeywordTok{library}\NormalTok{(stringr)              }\CommentTok{# String-verarbeitung}
+
+\NormalTok{debug <-}\StringTok{ }\NormalTok{F                    }\CommentTok{# kein debug printout}
+\NormalTok{debug <-}\StringTok{ }\NormalTok{T                    }\CommentTok{# debug printout}
+\NormalTok{Log <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(string) \{}
+  \ControlFlowTok{if}\NormalTok{(debug)\{}\KeywordTok{print}\NormalTok{(string)\}  }
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{die-2-excel-files-einlesen}{%
+\section{Die 2 Excel-Files einlesen}\label{die-2-excel-files-einlesen}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# alle Spalten einlesen, insb.  Farm ID,    WM group. Farm 30 fehlt, aber ich rechne nie mit Zeilennummern :}
+\NormalTok{codes <-}\StringTok{ }\KeywordTok{read.xlsx}\NormalTok{(}\StringTok{"coded_data_questionnaire pilot12.xlsx"}\NormalTok{, }\DataTypeTok{sheetName=}\StringTok{"data"}\NormalTok{)}
+
+\NormalTok{codes <-}\StringTok{ }\KeywordTok{head}\NormalTok{(codes,}\DecValTok{59}\NormalTok{)  }\CommentTok{# die letzten 2 Zeilen sind Quatsch}
+\CommentTok{#View(codes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Resistenzen <-}\StringTok{ }\KeywordTok{read.xlsx}\NormalTok{(}\StringTok{"MIC_E. coli environment_L Windhofer_final.xls"}\NormalTok{, }\DataTypeTok{sheetName=}\StringTok{"Abfrage"}\NormalTok{)[}\DecValTok{6}\OperatorTok{:}\DecValTok{22}\NormalTok{]   }\CommentTok{# wichtige Spalten einlesen: Probe, Antibiotika}
+\NormalTok{Resistenzen[}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\OtherTok{NULL}        \CommentTok{# die ist nicht wichtig}
+\CommentTok{#View(Resistenzen)            # 240 Zeilen}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{farm-ids-extrahieren}{%
+\section{Farm IDs extrahieren:}\label{farm-ids-extrahieren}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{col1_ <-}\StringTok{ }\KeywordTok{str_replace}\NormalTok{(Resistenzen[[}\DecValTok{1}\NormalTok{]], }\StringTok{"-"}\NormalTok{,  }\StringTok{""}\NormalTok{)     }\CommentTok{# evtl. Bindestrich weg}
+
+\NormalTok{Resistenzen[[}\DecValTok{1}\NormalTok{]] <-}\StringTok{ }\KeywordTok{substr}\NormalTok{(col1_, }\DecValTok{1}\NormalTok{,}\KeywordTok{nchar}\NormalTok{(col1_)}\OperatorTok{-}\DecValTok{2}\NormalTok{)  }\CommentTok{# dann sind die letzten 2 Zeichen überflüssig}
+\KeywordTok{names}\NormalTok{(Resistenzen)[}\DecValTok{1}\NormalTok{] <-}\StringTok{ "Farm.ID"}                   \CommentTok{# Diese Spalte enhält jetzt nur noch die Farm IDs}
+
+\CommentTok{#View(Resistenzen)                                   # 240 Zeilen}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{farm-30-ausschliessen}{%
+\section{Farm 30 ausschliessen}\label{farm-30-ausschliessen}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Resistenzen <-}\StringTok{ }\NormalTok{Resistenzen[Resistenzen[}\StringTok{"Farm.ID"}\NormalTok{] }\OperatorTok{!=}\StringTok{ }\DecValTok{30}\NormalTok{,]}
+\NormalTok{ResRow <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(Resistenzen)}
+\CommentTok{#View(Resistenzen)                                  # 236 = 240 - 4 Proben der Farm 30}
+\CommentTok{#Resistenzen[116,] Farm 29}
+\CommentTok{#Resistenzen[117,] Farm 31}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{spalten-fuxfcr-die-unabhuxe4ngigen-variablen-anfuxfcgen}{%
+\section{Spalten für die unabhängigen Variablen
+anfügen:}\label{spalten-fuxfcr-die-unabhuxe4ngigen-variablen-anfuxfcgen}}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+Abkürzung & Bedeutung & Variablentyp & Code/Werte & Code\tabularnewline
+\midrule
+\endhead
+WM & Waste Milk & binär & 1=Waste Milk & 2=No Waste Milk\tabularnewline
+OLS & Q9 Other LiveStock & binär & 0=No & 1=Yes\tabularnewline
+IAC & Q12 Ill Animals in Calving box & binär, viele NA & 0=No &
+1=Yes\tabularnewline
+HSC & Q20 Husbandry System Calves & 6-wertig nominal & 0=stable
+w\textbackslash o outlet & 1=stable w\textbackslash{}
+outlet\tabularnewline
+& & & 2=outdoors & 3=0+1\tabularnewline
+& & & 4=1+2 & 5=0+2\tabularnewline
+MY & Q6 meanMY/cow & numerisch & &\tabularnewline
+SCC & Q7 mean SCC/11mo & numerisch & &\tabularnewline
+CBC & Q13a calvingbox\_clean & numerisch, viele NA & &\tabularnewline
+DIA & Q17 IN\_diarrhea\textless30d & 6-wertig ordinal & 0-5
+&\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Start mit leeren Spalten:}
+\NormalTok{Resistenzen[}\StringTok{"WM.group"}\NormalTok{ ] <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\DataTypeTok{mode=}\StringTok{"character"}\NormalTok{, }\DataTypeTok{length=}\NormalTok{ResRow)               }
+\NormalTok{Resistenzen[}\StringTok{"OLS.group"}\NormalTok{] <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\DataTypeTok{mode=}\StringTok{"character"}\NormalTok{, }\DataTypeTok{length=}\NormalTok{ResRow)               }
+\NormalTok{Resistenzen[}\StringTok{"IAC.group"}\NormalTok{] <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\DataTypeTok{mode=}\StringTok{"character"}\NormalTok{, }\DataTypeTok{length=}\NormalTok{ResRow)  }
+\CommentTok{### Neue binäre hier dazufügen }\AlertTok{###}
+
+\NormalTok{Resistenzen[}\StringTok{"HSC.group"}\NormalTok{] <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\DataTypeTok{mode=}\StringTok{"character"}\NormalTok{, }\DataTypeTok{length=}\NormalTok{ResRow)              }
+
+\NormalTok{Resistenzen[}\StringTok{"MY.group"}\NormalTok{ ] <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\DataTypeTok{mode=}\StringTok{"character"}\NormalTok{, }\DataTypeTok{length=}\NormalTok{ResRow)               }
+\NormalTok{Resistenzen[}\StringTok{"SCC.group"}\NormalTok{] <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\DataTypeTok{mode=}\StringTok{"character"}\NormalTok{, }\DataTypeTok{length=}\NormalTok{ResRow)              }
+\NormalTok{Resistenzen[}\StringTok{"CBC.group"}\NormalTok{] <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\DataTypeTok{mode=}\StringTok{"character"}\NormalTok{, }\DataTypeTok{length=}\NormalTok{ResRow)        }
+
+\NormalTok{Resistenzen[}\StringTok{"DIA.group"}\NormalTok{] <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\DataTypeTok{mode=}\StringTok{"character"}\NormalTok{, }\DataTypeTok{length=}\NormalTok{ResRow)              }
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{ResRow)) \{                  }\CommentTok{# Schleife über alle Einträge }
+\NormalTok{  Farm_ID <-}\StringTok{ }\NormalTok{Resistenzen[i,}\StringTok{"Farm.ID"}\NormalTok{] }
+  
+\NormalTok{  Resistenzen[i,}\StringTok{"WM.group"}\NormalTok{ ] <-}\StringTok{ }\NormalTok{codes[codes[}\StringTok{"Farm.ID"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\NormalTok{Farm_ID,}\StringTok{"WM.group"}\NormalTok{                    ]  }
+\NormalTok{  Resistenzen[i,}\StringTok{"OLS.group"}\NormalTok{] <-}\StringTok{ }\NormalTok{codes[codes[}\StringTok{"Farm.ID"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\NormalTok{Farm_ID,}\StringTok{"Q9.other_livestock"}\NormalTok{          ]             }
+\NormalTok{  Resistenzen[i,}\StringTok{"IAC.group"}\NormalTok{] <-}\StringTok{ }\NormalTok{codes[codes[}\StringTok{"Farm.ID"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\NormalTok{Farm_ID,}\StringTok{"Q12.illanimals_in_calvingbox"}\NormalTok{]  }
+  \CommentTok{### Neue binäre hier dazufügen }\AlertTok{###}
+    
+\NormalTok{  Resistenzen[i,}\StringTok{"HSC.group"}\NormalTok{] <-}\StringTok{ }\NormalTok{codes[codes[}\StringTok{"Farm.ID"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\NormalTok{Farm_ID,}\StringTok{"Q20.husbandry_system_calves"}\NormalTok{ ]  }
+\NormalTok{  Resistenzen[i,}\StringTok{"MY.group"}\NormalTok{ ] <-}\StringTok{ }\NormalTok{codes[codes[}\StringTok{"Farm.ID"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\NormalTok{Farm_ID,}\StringTok{"Q6.meanMY.cow"}\NormalTok{               ]              }
+\NormalTok{  Resistenzen[i,}\StringTok{"SCC.group"}\NormalTok{] <-}\StringTok{ }\NormalTok{codes[codes[}\StringTok{"Farm.ID"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\NormalTok{Farm_ID,}\StringTok{"Q7.mean.SCC.11mo"}\NormalTok{            ]   }
+\NormalTok{  Resistenzen[i,}\StringTok{"CBC.group"}\NormalTok{] <-}\StringTok{ }\NormalTok{codes[codes[}\StringTok{"Farm.ID"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\NormalTok{Farm_ID,}\StringTok{"Q13a.calvingbox_clean"}\NormalTok{       ]      }
+
+\NormalTok{  Resistenzen[i,}\StringTok{"DIA.group"}\NormalTok{] <-}\StringTok{ }\NormalTok{codes[codes[}\StringTok{"Farm.ID"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\NormalTok{Farm_ID,}\StringTok{"Q17.IN_diarrhea.30d"}\NormalTok{ ]       }
+\NormalTok{\}}
+
+\ControlFlowTok{if}\NormalTok{(debug)\{}
+  \KeywordTok{View}\NormalTok{(Resistenzen)     }\CommentTok{# 240 Zeilen (ohne Farm 30)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{resistenzen.xlsx-rausschreiben}{%
+\section{Resistenzen.xlsx
+rausschreiben}\label{resistenzen.xlsx-rausschreiben}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{write.csv}\NormalTok{(Resistenzen,}\StringTok{"Resistenzen.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{document}

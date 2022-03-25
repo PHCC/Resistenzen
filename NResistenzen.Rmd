@@ -25,12 +25,12 @@ Log <- function(string) {
 Die letzte Zeile zählt!
 
 ```{r}
-Schicht <- "U"         # Un-stratified
-Schicht <- "LE8000"    # Less than or Equal to 8000
+Schicht <- "U"         # Un-stratisfied
 Schicht <- "GT8000"    # Greater Than 8000
+Schicht <- "LE8000"    # Less than or Equal to 8000
 ```
 
-# Resistenzen.Rmd erzeugte Resistenzen[Schicht].csv, dieses einlesen
+# Resistenzen.Rmd generated Resistenzen[Schicht].csv, Read it in
 
 Und evtl. ansehen
 
@@ -93,12 +93,13 @@ if(debug){View(NResistenzen)}
 write.csv(NResistenzen, paste( "N", FileIn , sep="" ))
 ```
 
-# Numerische und Ordinale Unabhängige Variablen
+# Funktion für die Grafik
 
 ```{r}
 graphisch2 <- function(gruppe, join, antibiotikum) {
   group <- Resistenzen[,gruppe ] 
   antib      <- Resistenzen[,antibiotikum ]
+  dir.create(paste("plots_",Schicht,sep=""))             # directory for writing the plots
 
   X <- c()
   Y <- c()
@@ -146,7 +147,7 @@ graphisch2 <- function(gruppe, join, antibiotikum) {
     xlab(xlab) + ylab(ylab)  + 
     ggtitle(paste("Number of", ylab, join,xlab))   
   )
-  ggsave(paste(gruppe, antibiotikum,".png"))
+  ggsave(paste("plots_",Schicht,"/", Schicht,"_",gruppe,"_",antibiotikum,".png", sep=""))
 }
 ```
 

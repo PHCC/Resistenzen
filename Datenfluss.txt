@@ -1,18 +1,18 @@
-'MIC_E. coli environment_L Windhofer_final.xls' + 'coded_data_questionnaire pilot12.xlsx'         (das sind die Eingabefiles                   )
+'MIC_E. coli environment_L Windhofer_final.xls' + 'coded_data_questionnaire pilot12.xlsx'         (sind die Eingabefiles                   )
                                                |
-                                        Resistenzen.Rmd                                           (in Resistenzen.Rmd muss man nie etwas 
+                                        Resistenzen.Rmd                                           (in Resistenzen.Rmd muss man nie ...     ) 
                                                |
-                                               V                                                  (...ändern:                                  )
-                 ResistenzenU.csv + ResistenzenLE8000.csv + ResistenzenGT8000.csv                 (es schreibt immer diese 3 files             )
+                                               V                                                  (... etwas ändern:                       )
+                 ResistenzenU.csv + ResistenzenLE8000.csv + ResistenzenGT8000.csv                 (es schreibt immer diese 3 files         )
                            |                  |                      |
-                   NResistenzen.Rmd    NResistenzen.Rmd        NResistenzen.Rmd                   (in NResistenzen.Rmd muss man für jede       )
-                           |                  |                      |                            (gewünschte Schicht die Zuweisung            )
-                           V                  V                      V                            (Schicht <- XYZ                              )
-                  NResistenzenU.csv  NResistenzenLE8000.csv   NResistenzenGT8000.csv              (entsprechend anpassen und das Programm      )
-                  NResistenzenU.pdf  NResistenzenLE8000.pdf   NResistenzenLE8000.pdf              (einmal laufen lassen                        )
+                   NResistenzen.Rmd    NResistenzen.Rmd        NResistenzen.Rmd                   (in NResistenzen.Rmd muss man für jede   )
+                           |                  |                      |                            (gewünschte Schicht die Zuweisung        )
+                           V                  V                      V                            (Schicht <- XYZ                          )
+                  NResistenzenU.csv  NResistenzenLE8000.csv   NResistenzenGT8000.csv              (entsprechend anpassen und das Programm  )
+                  NResistenzenU.pdf  NResistenzenLE8000.pdf   NResistenzenLE8000.pdf              (einmal laufen lassen                    )
+                  plots_U/           plots_LE8000/            plots_GT8000                        (directories mir den einfachen plots     )
 
-
-(Um X.pdf und NResistenzenX_files zu erzeugen sollte man ein evtl. existierende NResistenzen_files löschen/umbenennen, "> knit > knit to pdf" laufen lassen, danach das erzeugte pdf und NResistenzen_files umbenennen, diskutieren wir am besten wenn bei dir LaTeX läuft.
+(Um X.pdf zu erzeugen muss man "> knit > knit to pdf" laufen lassen, danach das erzeugte pdf umbenennen, diskutieren wir am besten wenn bei dir LaTeX läuft.
 
 Die Beschreibung für Verteilungen.Rmd kommt sobald ich da die Änderungen gemacht habe.)
 
