@@ -1,7 +1,7 @@
 ---
-title: "Kausalanalyse Resistenz"
+title: "Verteilungen"
 author: ''
-date: "24.03.2022"
+date: "28.03.2022"
 output:
   pdf_document:
     keep_tex: yes
@@ -23,16 +23,21 @@ Log <- function(string) {
 }
 ```
 
-# Resistenzen.Rmd erzeugte Resistenzen.csv, dieses einlesen
-Und evtl. ansehen
+# ResistenzenU.csv o. ResistenzenLE8000.csv o.ResistenzenGT8000.csv einlesen
+
+Diese Tabellen wurden von Resistenzen.Rmd erzeugt. Sie evtl. auch ansehen
 
 ```{r}
-Resistenzen <- read.csv("Resistenzen.csv")
+Schicht <- "U"
+Schicht <- "LE8000"
+Schicht <- "GT8000"
+
+Resistenzen <- read.csv(paste("Resistenzen",Schicht,".csv",sep=""))
 
 # csv raussschreiben u. wieder einlesen fügt vorne Index-Spalte an; diese entfernen :
 Resistenzen[,1] <- NULL                      
 
-View(Resistenzen)
+if(debug){View(Resistenzen)}
 ```
 
 ## Verteilungen
@@ -42,15 +47,15 @@ View(Resistenzen)
 
 ResistenzenWM1  <- Resistenzen[Resistenzen["WM.group"]  == "1",]  #    waste milk Group
 ResistenzenWM2  <- Resistenzen[Resistenzen["WM.group" ] == "2",]  # no waste milk Group
-#View(ResistenzenWM2)
+#if(debug){View(ResistenzenWM2)}
 
 ResistenzenOLS0 <- Resistenzen[Resistenzen["OLS.group"] == "0",]  #    other livestock Group
 ResistenzenOLS1 <- Resistenzen[Resistenzen["OLS.group"] == "1",]  # no other livestock  Group
-#View(ResistenzenOLS0);View(ResistenzenOLS1)
+#if(debug){View(ResistenzenOLS0);View(ResistenzenOLS1)}
 
 ResistenzenIAC0 <- Resistenzen[Resistenzen["IAC.group"] == "0",]  #    ill animals in calving box Group
 ResistenzenIAC1 <- Resistenzen[Resistenzen["IAC.group"] == "1",]  # no ill animals in calving box Group
-#View(ResistenzenIAC0);View(ResistenzenIAC1)
+#if(debug){View(ResistenzenIAC0);View(ResistenzenIAC1)}
 
 ResistenzenHSC0 <- Resistenzen[Resistenzen["HSC.group"] == "0",]  # stable w\o  outlet
 ResistenzenHSC1 <- Resistenzen[Resistenzen["HSC.group"] == "1",]  # stable with outlet
@@ -58,7 +63,7 @@ ResistenzenHSC2 <- Resistenzen[Resistenzen["HSC.group"] == "2",]  # outdoors
 ResistenzenHSC3 <- Resistenzen[Resistenzen["HSC.group"] == "3",]  # 0+1
 ResistenzenHSC4 <- Resistenzen[Resistenzen["HSC.group"] == "4",]  # 1+2
 ResistenzenHSC5 <- Resistenzen[Resistenzen["HSC.group"] == "5",]  # 0+2
-#View(ResistenzenHSC0);View(ResistenzenHSC1);View(ResistenzenHSC2);View(ResistenzenHSC3);View(ResistenzenHSC4);View(ResistenzenHSC5)
+#if(debug){View(ResistenzenHSC0);View(ResistenzenHSC1);View(ResistenzenHSC2);View(ResistenzenHSC3);View(ResistenzenHSC4);View(ResistenzenHSC5)}
 ```
 
 Graphiken und Deskriptive Analyse: Für diesen Fall analysieren wir die (meist links und/oder rechts abgeschnittenen) Verteilungen
@@ -73,6 +78,8 @@ graphisch <- function(groups,antib, anfang,ende, schrittBin,schrittLab) {
     Ende=T
   }
   Log(paste("Ende, ende =",Ende,ende))
+  
+  dir.create(paste("verteilungen_",Schicht,sep=""))             # directory for writing the plots
   
   if(groups == "WM.group" ){
     listdfs <- list(Resistenzen    , ResistenzenWM1 , ResistenzenWM2 )  #  implizit sollte genügen! (Vektor klappt hier nicht)
@@ -191,15 +198,19 @@ graphisch <- function(groups,antib, anfang,ende, schrittBin,schrittLab) {
     # limits=anfang...ende aber bisschen mehr um dort zu plotten 
     # -0.01 o. *0.9; +1 o. *1.1 genügt nicht
     geom_histogram()                           + 
-    theme(axis.text.x = element_text(size=12)) +
-    theme(axis.text.y = element_text(size=12)) +
+    theme(axis.text.x = element_text(size=12)) +   # HSC.group kleben die labels oft aneinander
+    theme(axis.text.y = element_text(size=12)) +   # aber das ist kaum zu ändern: mit < 12 nimmt R oft noch mehr ticks!
     xlab(Xlab) + ylab(Ylab)                    +
     
-    #facet_grid(reformulate(".",groups))    +     # vertical stack  : reformulate gibt Formel (IAC.group ~ .)  etc.
-    facet_grid(reformulate(groups,"."))    +      # horizontal stack: reformulate gibt Formel (. ~ IAC.group)  etc.
+    facet_grid(reformulate(".",groups))    +       # vertikal   geschichtet. reformulate gibt Formel (IAC.group ~ .)  etc.
+    #facet_grid(reformulate(groups,"."))    +      # horizontal geschichtet - war weniger schön.
     
     ggtitle(paste(antib,"for different",groups))
+  
+
   print(plot)
+  ggsave(paste("verteilungen_",Schicht,"/", Schicht,"_",groups,"_",antib,".png", sep=""))
+
 }
 ```
 
@@ -211,6 +222,7 @@ graphisch <- function(groups,antib, anfang,ende, schrittBin,schrittLab) {
 #  graphisch("IAC.group", "CIP", 0.015,   8   ,   0.015,   4     ) 
 #``` 
 ---
+
 ## Ill Animals in Calving Box - Gruppen
 
 Mit "IAC" abgekürzt.

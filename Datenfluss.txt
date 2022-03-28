@@ -9,11 +9,17 @@
                            |                  |                      |                            (gewünschte Schicht die Zuweisung        )
                            V                  V                      V                            (Schicht <- XYZ                          )
                   NResistenzenU.csv  NResistenzenLE8000.csv   NResistenzenGT8000.csv              (entsprechend anpassen und das Programm  )
-                  NResistenzenU.pdf  NResistenzenLE8000.pdf   NResistenzenLE8000.pdf              (einmal laufen lassen                    )
-                  plots_U/           plots_LE8000/            plots_GT8000                        (directories mir den einfachen plots     )
+                  NResistenzenU.pdf  NResistenzenLE8000.pdf   NResistenzenGT8000.pdf              (einmal laufen lassen                    )
+                  plots_U/           plots_LE8000/            plots_GT8000/                       (directories mit den einfachen plots     )
 
-(Um X.pdf zu erzeugen muss man "> knit > knit to pdf" laufen lassen, danach das erzeugte pdf umbenennen, diskutieren wir am besten wenn bei dir LaTeX läuft.
+(Um X.pdf zu erzeugen muss man "> knit > knit to pdf" laufen lassen, danach das erzeugte pdf umbenennen, diskutieren wir am besten wenn bei dir LaTeX läuft. Aber wichtiger sind wohl die einfachen plots)
 
-Die Beschreibung für Verteilungen.Rmd kommt sobald ich da die Änderungen gemacht habe.)
 
+                 ResistenzenU.csv   ResistenzenLE8000.csv   ResistenzenGT8000.csv                 (es schreibt immer diese 3 files         )
+                           |                  |                      |
+                   Verteilungen.Rmd    Verteilungen.Rmd        Verteilungen.Rmd                   (in Verteilungen.Rmd muss man für jede   )
+                           |                  |                      |                            (gewünschte Schicht die Zuweisung        )
+                           V                  V                      V                            (Schicht <- XYZ entspr. anpassen u.      )
+                   Verteilungen.Rmd  VerteilungenLE8000.pdf   VerteilungenGT8000.pdf              (das Programm einmal laufen lassen       )
+                   Verteilungen_U/   Verteilungen_LE8000/     Verteilungen_GT8000/                (enthalten die barplots                  )
 
