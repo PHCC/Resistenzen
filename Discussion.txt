@@ -1,19 +1,27 @@
 --------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------
 
-Variablenselektion für "mixed" logistic regression ("mixed" nicht in Beth, Trapp 4.ed. erklärt, meint vlt. numerische + nominale/Variablen - das machen wir bestimmt. Und "mixed effect" machen wir auch, da im Studienplan) :
-- keine Ausreisser (sie beeinflussen jedes parametrische Verfahren stark)
-- keine 2 Variablen sind linear abhängig (einfacher Test auf *einfache* Kollinearität aus plot + Korrelation. Das ist eine schwächere Bedingung als Absenz von Multikollinearität). Das wird gut bestätigt im angehängten PDF
+Liebe Lisa,
 
-Nach regression: 
-- Berechnung des "Variable Inflation Factor" (für jede Variable) bestimmt echte *Multi*-Kollinearität. Falls zu gross: Variable weglassen und Regression wiederholen
+anbei Plots und Diskussion zur Variablenselektion für "mixed" logistic regression ("mixed" ist nicht in Beth, Trapp 4.ed. erklärt, meint vlt. numerische + nominale/binäre Variablen - das machen wir bestimmt. Und vlt. "mixed effect" - machen wir auch, da im Studienplan) :
+- ein Ausreisser (er beeinflusst jedes parametrische Verfahren stark)
+- keine 2 Variablen sind linear abhängig (Test auf *einfache* Linearität aus plot + Korrelation. Das ist eine schwächere Bedingung als Absenz von Multikollinearität)
+
+Im Verlaufe der Regression sollten wir machen: 
+- Berechnung des "Variable Inflation Factor" (für jede Variable). Sie bestimmt echte *Multi*-Kollinearität. Falls zu gross: Variable weglassen und Regression wiederholen
 - Koeffizientengrösse (exakter mittels chi² Test): trägt Variable signifikant zur Voraussage bei? Falls wenig: Variable weglassen und Regression wiederholen
 (praktisch: lieber andersrum, "forward selection" oder "forward"+"backward" zusammen)
 
 Andere Punkte:
-- sample size calculation gekriegt?
-- MY Schichtung machen wir, aber nicht für alle Variablen!?
+- hast du die sample size calculation gekriegt?
+- MY Schichtung machen wir, aber nicht für alle Antibiotika!?
 - klappte LaTeX-Installation?
+- kannst du meine Programme laufen lassen?
+
+Schreib mir einfach wenn du das und voriges diskutieren willst.
+
+Schönen Gruss,
+Christoph
 
 --------------------------------------------------------------------------------------------
 

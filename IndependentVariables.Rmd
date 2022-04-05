@@ -1,7 +1,7 @@
 ---
-title: "Correlations of Independent Variables"
+title: "Studies of Independent Variables"
 author: ''
-date: "04.04.2022"
+date: "05.04.2022"
 output:
   pdf_document:
     keep_tex: yes
@@ -14,50 +14,58 @@ geometry: margin=0.5cm
 #library(ggplot2)     # moderne plots
 library(GGally)
 
-debug <- F           # kein debug printout
 debug <- T           # debug printout
+debug <- F           # kein debug printout
 Log <- function(string) {
   if(debug){print(string)}  
 }
 ```
 
-# MY Schicht Festlegen
+# For all MY Groups :
 
-Die letzte Zeile zählt!
+- Resistenzen.Rmd generated Resistenzen[Schicht].csv, read it in
+- plot variables and calculate correlations
 
-```{r}
-Schicht <- "GT8000"    # Greater Than 8000
-Schicht <- "LE8000"    # Less than or Equal to 8000
-Schicht <- "U"         # Un-stratisfied
-```
+```{r,warning=F,message=F}
+for( Schicht in c("GT8000","LE8000","U") ) {     # Greater Than 8000 / Less than or Equal to 8000 / Un-stratisfied
+   FileIn <- paste( "Resistenzen",Schicht,".csv" , sep="" )  
+   Resistenzen <- read.csv(FileIn)
 
-# Resistenzen.Rmd generated Resistenzen[Schicht].csv, Read it in
+  # csv schreiben fügt vorne Index-Spalte an; diese entfernen :
+  Resistenzen[,1] <- NULL                      
 
-Und evtl. ansehen
+  if(debug){View(Resistenzen)}
 
-```{r}
-FileIn <- paste( "Resistenzen",Schicht,".csv" , sep="" )  # Fileout ist nur N davorgehängt
-Resistenzen <- read.csv(FileIn)
-
-# csv schreiben fügt vorne Index-Spalte an; diese entfernen :
-Resistenzen[,1] <- NULL                      
-
-if(debug){View(Resistenzen)}
-```
-
-# Plot Variables and Calculate Correlations
-
-```{r, warning=F, message=F}
-df <- data.frame(WM.gr  = Resistenzen$WM.group,      # kürzen, sonst Platzprobleme
-                 OLS.gr = Resistenzen$OLS.group, 
+  df <- data.frame(WM.gr  = Resistenzen$WM.group,      # unabhängige Variablen extrahieren
+                 OLS.gr = Resistenzen$OLS.group,     # Titel kürzen, sonst Platzprobleme ...
                  IAC.gr = Resistenzen$IAC.group, 
                  HSC.gr = Resistenzen$HSC.group,
                  MY     = Resistenzen$MY, 
                  SCC    = Resistenzen$SCC, 
                  CBC    = Resistenzen$CBC, 
                  DIA    = Resistenzen$DIA)
-#View(df)
-ggpairs(df)
+  #View(df)
+  print(ggpairs(df, title = paste("group:",Schicht)))
+  print("")
+}
 ```
 
-The maximum correlation magnitude amounts to 28.7% . This is not yet a strong linear correlation and looks promising wrt. collinearity problems in the multivariate logistic regression.
+## Linear Depence?
+
+As it implies multicollinearity, the logistic regression would be unreliable in its presence.
+
+The maximum correlation magnitude amounts to 
+
+- 28.7% in the unstratisfied analysis 
+- 43.3% in the stratisfied analysis 
+
+These are not yet a strong linear correlations, they don't hint to collinearity problems in the multivariate logistic regression.
+
+
+## Outliers?
+
+Im wesentlichen sind nur die plots ohne diskrete Variablen gut zu interpretieren (für die anderen könnte man bessere Grafiken machen, hätte dann aber immer noch das Problem der beliebigen Kodierung). 
+
+In Histogrammen und Streuplots sehe ich einen Ausreisser mit MY = 5000, das ist Farm 32. Ist sie als problematisch bekannt?
+
+
