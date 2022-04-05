@@ -36,7 +36,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Anzahl Resistenzen und einfache plots},
+  pdftitle={Number of Resistances and Simple Plots},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -99,15 +99,12 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 
-\title{Anzahl Resistenzen und einfache plots}
+\title{Number of Resistances and Simple Plots}
 \author{}
-\date{\vspace{-2.5em}24.03.2022}
+\date{\vspace{-2.5em}04.04.2022}
 
 \begin{document}
 \maketitle
-
-Es darf kein Verzeichnis NResistenzen\_files/ geben, sonst werden nicht
-die neuen plots gespeichert!
 
 \hypertarget{bibliotheken-laden-hilfsfunktion}{%
 \section{Bibliotheken laden,
@@ -132,15 +129,15 @@ Die letzte Zeile zählt!
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{Schicht <-}\StringTok{ "U"}         \CommentTok{# Un-stratified}
-\NormalTok{Schicht <-}\StringTok{ "LE8000"}    \CommentTok{# Less than or Equal to 8000}
 \NormalTok{Schicht <-}\StringTok{ "GT8000"}    \CommentTok{# Greater Than 8000}
+\NormalTok{Schicht <-}\StringTok{ "LE8000"}    \CommentTok{# Less than or Equal to 8000}
+\NormalTok{Schicht <-}\StringTok{ "U"}         \CommentTok{# Un-stratisfied}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{resistenzen.rmd-erzeugte-resistenzenschicht.csv-dieses-einlesen}{%
-\section{Resistenzen.Rmd erzeugte Resistenzen{[}Schicht{]}.csv, dieses
-einlesen}\label{resistenzen.rmd-erzeugte-resistenzenschicht.csv-dieses-einlesen}}
+\hypertarget{resistenzen.rmd-generated-resistenzenschicht.csv-read-it-in}{%
+\section{Resistenzen.Rmd generated Resistenzen{[}Schicht{]}.csv, Read it
+in}\label{resistenzen.rmd-generated-resistenzenschicht.csv-read-it-in}}
 
 Und evtl. ansehen
 
@@ -209,15 +206,15 @@ Multirestenz dokumentieren und als NResistenzen.csv ausschreiben
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{numerische-und-ordinale-unabhuxe4ngige-variablen}{%
-\section{Numerische und Ordinale Unabhängige
-Variablen}\label{numerische-und-ordinale-unabhuxe4ngige-variablen}}
+\hypertarget{funktion-fuxfcr-die-grafik}{%
+\section{Funktion für die Grafik}\label{funktion-fuxfcr-die-grafik}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{graphisch2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(gruppe, join, antibiotikum) \{}
 \NormalTok{  group <-}\StringTok{ }\NormalTok{Resistenzen[,gruppe ] }
 \NormalTok{  antib      <-}\StringTok{ }\NormalTok{Resistenzen[,antibiotikum ]}
+  \KeywordTok{dir.create}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"plots_"}\NormalTok{,Schicht,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{))             }\CommentTok{# directory for writing the plots}
 
 \NormalTok{  X <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
 \NormalTok{  Y <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
@@ -236,14 +233,14 @@ Variablen}\label{numerische-und-ordinale-unabhuxe4ngige-variablen}}
 \NormalTok{  \}  }
 
 \NormalTok{  df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(X,Y)}
-\NormalTok{  ylab <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(antibiotikum,}\StringTok{"- Resistenzen"}\NormalTok{)}
+\NormalTok{  ylab <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(antibiotikum,}\StringTok{"- Resistances"}\NormalTok{)}
   
-  \ControlFlowTok{if}\NormalTok{( gruppe }\OperatorTok{==}\StringTok{ "WM.group"}\NormalTok{ )\{xlab <-}\StringTok{ "Wastemilk-Gruppe"}\NormalTok{\}}
-  \ControlFlowTok{if}\NormalTok{( gruppe }\OperatorTok{==}\StringTok{ "OLS.group"}\NormalTok{)\{xlab <-}\StringTok{ "Other LiveStock-Gruppe"}\NormalTok{\}            }
-  \ControlFlowTok{if}\NormalTok{( gruppe }\OperatorTok{==}\StringTok{ "IAC.group"}\NormalTok{)\{xlab <-}\StringTok{ "Ill Animals in Calving box-Gruppe"}\NormalTok{\}}
+  \ControlFlowTok{if}\NormalTok{( gruppe }\OperatorTok{==}\StringTok{ "WM.group"}\NormalTok{ )\{xlab <-}\StringTok{ "Wastemilk Group"}\NormalTok{\}}
+  \ControlFlowTok{if}\NormalTok{( gruppe }\OperatorTok{==}\StringTok{ "OLS.group"}\NormalTok{)\{xlab <-}\StringTok{ "Other LiveStock Group"}\NormalTok{\}            }
+  \ControlFlowTok{if}\NormalTok{( gruppe }\OperatorTok{==}\StringTok{ "IAC.group"}\NormalTok{)\{xlab <-}\StringTok{ "Ill Animals in Calving Box Group"}\NormalTok{\}}
   \CommentTok{### Neue binäre hier dazufügen }\AlertTok{###}
 
-  \ControlFlowTok{if}\NormalTok{( gruppe }\OperatorTok{==}\StringTok{ "HSC.group"}\NormalTok{)\{xlab <-}\StringTok{ "Husbandry System Calves-Gruppe"}\NormalTok{\}   }
+  \ControlFlowTok{if}\NormalTok{( gruppe }\OperatorTok{==}\StringTok{ "HSC.group"}\NormalTok{)\{xlab <-}\StringTok{ "Husbandry System Calves Group"}\NormalTok{\}   }
   \CommentTok{### Neue nominale hier dazufügen }\AlertTok{###}
   
   \ControlFlowTok{if}\NormalTok{( gruppe }\OperatorTok{==}\StringTok{ "MY"}\NormalTok{       )\{xlab <-}\StringTok{ "meanMY/cow"}\NormalTok{\}}
@@ -263,8 +260,9 @@ Variablen}\label{numerische-und-ordinale-unabhuxe4ngige-variablen}}
 \StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
 \StringTok{    }\KeywordTok{xlim}\NormalTok{(min,max) }\OperatorTok{+}
 \StringTok{    }\KeywordTok{xlab}\NormalTok{(xlab) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(ylab)  }\OperatorTok{+}\StringTok{ }
-\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"Anzahl"}\NormalTok{, ylab, join,xlab))   }
+\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"Number of"}\NormalTok{, ylab, join,xlab))   }
 \NormalTok{  )}
+  \KeywordTok{ggsave}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"plots_"}\NormalTok{,Schicht,}\StringTok{"/"}\NormalTok{, Schicht,}\StringTok{"_"}\NormalTok{,gruppe,}\StringTok{"_"}\NormalTok{,antibiotikum,}\StringTok{".png"}\NormalTok{, }\DataTypeTok{sep=}\StringTok{""}\NormalTok{))}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -300,10 +298,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-1.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-2.pdf}
@@ -312,10 +318,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-3.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-4.pdf}
@@ -324,10 +338,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-5.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-6.pdf}
@@ -336,10 +358,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-7.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-8.pdf}
@@ -348,10 +378,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-9.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-10.pdf}
@@ -361,10 +399,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] "--------------------------------------------------------"
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-11.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-12.pdf}
@@ -373,10 +419,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-13.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-14.pdf}
@@ -385,10 +439,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-15.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-16.pdf}
@@ -397,10 +459,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-17.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-18.pdf}
@@ -409,10 +479,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-19.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-20.pdf}
@@ -422,10 +500,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] "--------------------------------------------------------"
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-21.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-22.pdf}
@@ -434,10 +520,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-23.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-24.pdf}
@@ -446,10 +540,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-25.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-26.pdf}
@@ -458,10 +560,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-27.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-28.pdf}
@@ -470,10 +580,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-29.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-30.pdf}
@@ -483,10 +601,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] "--------------------------------------------------------"
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-31.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-32.pdf}
@@ -495,10 +621,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-33.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-34.pdf}
@@ -507,10 +641,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-35.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-36.pdf}
@@ -519,10 +661,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-37.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-38.pdf}
@@ -531,10 +681,18 @@ Variablen}\label{plot-anzahl-der-resistenzen-fuxfcr-verschiedene-antibiotika-num
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-39.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/numerical_variables-40.pdf}
@@ -584,10 +742,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-1.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-2.pdf}
@@ -596,10 +762,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-3.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-4.pdf}
@@ -608,10 +782,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-5.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-6.pdf}
@@ -620,10 +802,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-7.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-8.pdf}
@@ -632,10 +822,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-9.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-10.pdf}
@@ -645,10 +843,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] "--------------------------------------------------------"
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-11.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-12.pdf}
@@ -657,10 +863,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-13.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-14.pdf}
@@ -669,10 +883,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-15.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-16.pdf}
@@ -681,10 +903,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-17.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-18.pdf}
@@ -693,10 +923,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-19.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-20.pdf}
@@ -706,10 +944,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] "--------------------------------------------------------"
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-21.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-22.pdf}
@@ -718,10 +964,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-23.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-24.pdf}
@@ -730,10 +984,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-25.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-26.pdf}
@@ -742,10 +1004,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-27.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-28.pdf}
@@ -754,10 +1024,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-29.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-30.pdf}
@@ -767,10 +1045,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] "--------------------------------------------------------"
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-31.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-32.pdf}
@@ -779,10 +1065,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-33.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-34.pdf}
@@ -791,10 +1085,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-35.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-36.pdf}
@@ -803,10 +1105,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-37.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-38.pdf}
@@ -815,10 +1125,18 @@ Variablen}\label{binuxe4re-und-nominale-unabhuxe4ngige-variablen}}
 ## [1] ""
 \end{verbatim}
 
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-39.pdf}
 
 \begin{verbatim}
 ## [1] ""
+\end{verbatim}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
 \end{verbatim}
 
 \includegraphics{NResistenzen_files/figure-latex/binary_or_nominal_variables-40.pdf}

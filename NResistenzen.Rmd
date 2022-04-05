@@ -1,7 +1,7 @@
 ---
 title: "Number of Resistances and Simple Plots"
 author: ''
-date: "24.03.2022"
+date: "04.04.2022"
 output:
   pdf_document:
     keep_tex: yes
@@ -25,9 +25,9 @@ Log <- function(string) {
 Die letzte Zeile zählt!
 
 ```{r}
-Schicht <- "U"         # Un-stratisfied
 Schicht <- "GT8000"    # Greater Than 8000
 Schicht <- "LE8000"    # Less than or Equal to 8000
+Schicht <- "U"         # Un-stratisfied
 ```
 
 # Resistenzen.Rmd generated Resistenzen[Schicht].csv, Read it in

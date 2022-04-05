@@ -1,21 +1,74 @@
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+Variablenselektion für "mixed" logistic regression ("mixed" nicht in Beth, Trapp 4.ed. erklärt, meint vlt. numerische + nominale/Variablen - das machen wir bestimmt. Und "mixed effect" machen wir auch, da im Studienplan) :
+- keine Ausreisser (sie beeinflussen jedes parametrische Verfahren stark)
+- keine 2 Variablen sind linear abhängig (einfacher Test auf *einfache* Kollinearität aus plot + Korrelation. Das ist eine schwächere Bedingung als Absenz von Multikollinearität). Das wird gut bestätigt im angehängten PDF
+
+Nach regression: 
+- Berechnung des "Variable Inflation Factor" (für jede Variable) bestimmt echte *Multi*-Kollinearität. Falls zu gross: Variable weglassen und Regression wiederholen
+- Koeffizientengrösse (exakter mittels chi² Test): trägt Variable signifikant zur Voraussage bei? Falls wenig: Variable weglassen und Regression wiederholen
+(praktisch: lieber andersrum, "forward selection" oder "forward"+"backward" zusammen)
+
+Andere Punkte:
+- sample size calculation gekriegt?
+- MY Schichtung machen wir, aber nicht für alle Variablen!?
+- klappte LaTeX-Installation?
+
+--------------------------------------------------------------------------------------------
+
 Liebe Lisa,
 
-um die plots wiederzufinden brachte das umbenennen der code chunks nicht sehr viel. Drum schreibe ich sie jetzt doch explizit raus, es genügt also "Restart R and Run all Chunks" um die plots zu erzeugen. 
+um die plots wiederzufinden brachte das umbenennen der code chunks nicht sehr viel. Drum schreibe ich sie jetzt doch explizit raus, es genügt also "Restart R and Run all Chunks" um die plots zu erzeugen. Das Program legt dann (falls nötig) z.B. das directory "plots_LE8000" und schreibt darin files wie z.B. LE8000_HSC.group_SMX.png
 
-Das Program legt dann (falls nötig) z.B. das directory "plots_LE8000" und schreibt darin files wie z.B. LE8000_HSC.group_SMX.png
-
-Die Verteilungsplots hab ich nötigenfalls verschönert, wir haben uns auf vertikale Schichtung für alle geeinigt.
+Die Verteilungsplots hab ich nötigenfalls verschönert, wir haben uns auf vertikale Schichtung für alle geeinigt, sie sind in Verzeichnissen "verteilung_LE8000" usw.  (die manchmal aneinanderklebenden y tick labels für HSC.group kann ich nicht einfach loswerden: Setzte ich den font size kleiner, dann nimmt er noch mehr y ticks). Vielleicht wäre es gut, die Schicht in allen plots zu vermerken (vermeidet auch Verwechslungen). Es muss uns noch klarer werden, was wir mit den Schichten überhaupt vorhaben.
 
 Könntest du mir bitte Titel u. Auflage des Buchs nennen das dir für dir für die multivariate "mixed" logistische Regression gegeben wurde. Fast alle Bücher finde ich online und ich wäre gerne ganz sicher was deine Betreuerin meint bevor ich damit anfange.
 
-Angehängt sind alle Programme, die 3 pdfs, plots und die Dokumentation in Datenfluss.txt (die manchmal aneinanderklebenden y tick labels für HSC.group kann ich nicht einfach loswerden: Setzte ich den font size kleiner, dann nimmt er noch mehr y ticks). Vielleicht wäre es gut, die Schicht in allen plots zu vermerken (vermeidet auch Verwechslungen). Es muss uns aber noch klarer werden, was wir mit den Schichten überhaupt vorhaben.
+Angehängt sind alle Programme, die 3 pdfs, plots und die Dokumentation in Datenfluss.txt Alles ist in einem tar-file, mac packt da automatisch aus wenn du draufklickst. 
 
-Ist alles verständlich? Diese Woche kann ich leider erst am Freitag (11:00 oder 18:00) oder Samstag (11:00) sprechen.
+Ist alles verständlich? Diese Woche könnte ich am Freitag (11:00 oder 18:00) oder Samstag (11:00) sprechen.
 
 Schönen Gruss,
 Christoph
 
 --------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Liebe Lisa,
 danke für unser Gespräch.

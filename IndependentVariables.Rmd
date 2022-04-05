@@ -1,0 +1,63 @@
+---
+title: "Correlations of Independent Variables"
+author: ''
+date: "04.04.2022"
+output:
+  pdf_document:
+    keep_tex: yes
+geometry: margin=0.5cm
+---
+
+# Bibliotheken laden, Hilfsfunktion
+
+```{r, warning=F, error=F, message=F}
+#library(ggplot2)     # moderne plots
+library(GGally)
+
+debug <- F           # kein debug printout
+debug <- T           # debug printout
+Log <- function(string) {
+  if(debug){print(string)}  
+}
+```
+
+# MY Schicht Festlegen
+
+Die letzte Zeile zählt!
+
+```{r}
+Schicht <- "GT8000"    # Greater Than 8000
+Schicht <- "LE8000"    # Less than or Equal to 8000
+Schicht <- "U"         # Un-stratisfied
+```
+
+# Resistenzen.Rmd generated Resistenzen[Schicht].csv, Read it in
+
+Und evtl. ansehen
+
+```{r}
+FileIn <- paste( "Resistenzen",Schicht,".csv" , sep="" )  # Fileout ist nur N davorgehängt
+Resistenzen <- read.csv(FileIn)
+
+# csv schreiben fügt vorne Index-Spalte an; diese entfernen :
+Resistenzen[,1] <- NULL                      
+
+if(debug){View(Resistenzen)}
+```
+
+# Plot Variables and Calculate Correlations
+
+```{r, warning=F, message=F}
+df <- data.frame(WM.gr  = Resistenzen$WM.group,      # kürzen, sonst Platzprobleme
+                 OLS.gr = Resistenzen$OLS.group, 
+                 IAC.gr = Resistenzen$IAC.group, 
+                 HSC.gr = Resistenzen$HSC.group,
+                 MY     = Resistenzen$MY, 
+                 SCC    = Resistenzen$SCC, 
+                 CBC    = Resistenzen$CBC, 
+                 DIA    = Resistenzen$DIA)
+#View(df)
+ggpairs(df)
+```
+
+The maximum correlation magnitude amounts to 28.7% . This is not yet a strong linear correlation and looks promising wrt. collinearity problems in the multivariate logistic regression.
