@@ -79,7 +79,10 @@ Resistenzen["OLS.group"] <- vector(mode="character", length=ResRow)
 Resistenzen["IAC.group"] <- vector(mode="character", length=ResRow)  
 ### Neue binäre hier dazufügen ###
 
-Resistenzen["HSC.group"] <- vector(mode="character", length=ResRow)              
+Resistenzen["HSC.group"] <- vector(mode="character", length=ResRow)    
+for( j in 0:5 ){          # HSC als 6 dummy-Variablen für Korrelation&Regression
+  Resistenzen[paste("HSC",j,sep="")]  <- vector(mode="character", length=ResRow)
+}
 ### Neue nominale hier dazufügen ###
 
 Resistenzen["MY" ] <- vector(mode="character", length=ResRow)               
@@ -88,7 +91,7 @@ Resistenzen["CBC"] <- vector(mode="character", length=ResRow)
 Resistenzen["DIA"] <- vector(mode="character", length=ResRow)              
 ### Neue numerische hier dazufügen ###
 
-for (i in c(1:ResRow)) {                  # Schleife über alle Einträge 
+for (i in 1:ResRow ) {                  # Schleife über alle Einträge 
   Farm_ID <- Resistenzen[i,"Farm.ID"] 
   
   Resistenzen[i,"WM.group" ] <- codes[codes["Farm.ID"] == Farm_ID,"WM.group"                    ]  
@@ -97,6 +100,9 @@ for (i in c(1:ResRow)) {                  # Schleife über alle Einträge
   ### Neue binäre hier dazufügen ###
     
   Resistenzen[i,"HSC.group"] <- codes[codes["Farm.ID"] == Farm_ID,"Q20.husbandry_system_calves" ]  
+  for( j in 0:5 ){              # HSC umkodieren als 6 dummy-Variablen für Korrelation&Regression
+    Resistenzen[i,paste("HSC",j,sep="")]      <- if(Resistenzen[i,"HSC.group"] == j) 1  else 0
+  }
   ### Neue nominale hier dazufügen ###
 
   Resistenzen[i,"MY"       ] <- codes[codes["Farm.ID"] == Farm_ID,"Q6.meanMY.cow"               ]              
