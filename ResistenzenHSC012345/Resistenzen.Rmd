@@ -13,10 +13,8 @@ geometry: margin=0.5cm
 ```{r, warning=F, error=F, message=F}
 library(xlsx)                 # Um Excel files einzulesen
 library(stringr)              # String-verarbeitung
-
 debug <- F                    # kein debug printout
 debug <- T                    # debug printout
-
 Log  <- function(string) { if(debug){print(string)} }
 ```
 
@@ -25,7 +23,6 @@ Log  <- function(string) { if(debug){print(string)} }
 ```{r, warning=F, error=F, message=F}
 # alle Spalten einlesen, insb.  Farm ID,	WM group. Farm 30 fehlt, aber ich rechne nie mit Zeilennummern :
 codes <- read.xlsx("coded_data_questionnaire pilot12.xlsx", sheetName="data")
-
 codes <- head(codes,59)  # die letzten 2 Zeilen sind Quatsch
 if(debug){View(codes)}
 ```
@@ -33,7 +30,6 @@ if(debug){View(codes)}
 ```{r}
 Resistenzen <- read.xlsx("MIC_E. coli environment_L Windhofer_final.xls", sheetName="Abfrage")[6:22]   # wichtige Spalten einlesen: Probe, Antibiotika
 Resistenzen[2] <- NULL        # die ist nicht wichtig
-
 if(debug){View(Resistenzen)}            # 240 Zeilen
 ```
 
@@ -41,10 +37,8 @@ if(debug){View(Resistenzen)}            # 240 Zeilen
 
 ```{r}
 col1_ <- str_replace(Resistenzen[[1]], "-",  "")     # evtl. Bindestrich weg
-
 Resistenzen[[1]] <- substr(col1_, 1,nchar(col1_)-2)  # dann sind die letzten 2 Zeichen überflüssig
 names(Resistenzen)[1] <- "Farm.ID"                   # Diese Spalte enhält jetzt nur noch die Farm IDs
-
 if(debug){View(Resistenzen)}                         
 ```
 
@@ -53,7 +47,6 @@ if(debug){View(Resistenzen)}
 ```{r}
 Resistenzen <- Resistenzen[Resistenzen["Farm.ID"] != 30,]
 ResRow <- nrow(Resistenzen)
-
 if(debug){View(Resistenzen)}                                  # 236 = 240 - 4 Proben der Farm 30
 ```
 
@@ -73,24 +66,21 @@ if(debug){View(Resistenzen)}                                  # 236 = 240 - 4 Pr
   DIA         Q17 IN_diarrhea<30d               6-wertig ordinal     0-5            
 
 ```{r}
-# Start mit leeren Spalten (nötig!?) :
+# Start mit leeren Spalten:
 Resistenzen["WM.group" ] <- vector(mode="character", length=ResRow)               
 Resistenzen["OLS.group"] <- vector(mode="character", length=ResRow)               
 Resistenzen["IAC.group"] <- vector(mode="character", length=ResRow)  
 ### Neue binäre hier dazufügen ###
-
 Resistenzen["HSC.group"] <- vector(mode="character", length=ResRow)    
-for( j in 0:2 ){          # HSC als nur 3 dummy-Variablen für Korrelation&Regression
+for( j in 0:5 ){          # HSC als 6 dummy-Variablen für Korrelation&Regression
   Resistenzen[paste("HSC",j,sep="")]  <- vector(mode="character", length=ResRow)
 }
 ### Neue nominale hier dazufügen ###
-
 Resistenzen["MY" ] <- vector(mode="character", length=ResRow)               
 Resistenzen["SCC"] <- vector(mode="character", length=ResRow)              
 Resistenzen["CBC"] <- vector(mode="character", length=ResRow)        
 Resistenzen["DIA"] <- vector(mode="character", length=ResRow)              
 ### Neue numerische hier dazufügen ###
-
 for (i in 1:ResRow ) {                  # Schleife über alle Einträge 
   Farm_ID <- Resistenzen[i,"Farm.ID"] 
   
@@ -100,31 +90,16 @@ for (i in 1:ResRow ) {                  # Schleife über alle Einträge
   ### Neue binäre hier dazufügen ###
     
   Resistenzen[i,"HSC.group"] <- codes[codes["Farm.ID"] == Farm_ID,"Q20.husbandry_system_calves" ]  
-  for( j in 0:2 ){              # HSC umkodieren als nur 3 dummy-Variablen für Korrelation&Regression:
-                                # 0, 1, 2 bleiben
-    Resistenzen[i,paste("HSC",j,sep="")] <- if(Resistenzen[i,"HSC.group"] == j) 1  else 0 
-  }                             # 3, 4, 5 wieder aufdrüseln
-  if(Resistenzen[i,"HSC.group"] == 3){      # 3 = 0 + 1                                      
-    Resistenzen[i,"HSC0"]      <- 1
-    Resistenzen[i,"HSC1"]      <- 1
-  }
-  if(Resistenzen[i,"HSC.group"] == 4){      # 4 = 1 + 2
-    Resistenzen[i,"HSC1"]      <- 1
-    Resistenzen[i,"HSC2"]      <- 1
-  }
-  if(Resistenzen[i,"HSC.group"] == 5){      # 5 = 0 + 2
-    Resistenzen[i,"HSC0"]      <- 1
-    Resistenzen[i,"HSC2"]      <- 1
+  for( j in 0:5 ){              # HSC umkodieren als 6 dummy-Variablen für Korrelation&Regression
+    Resistenzen[i,paste("HSC",j,sep="")]      <- if(Resistenzen[i,"HSC.group"] == j) 1  else 0
   }
   ### Neue nominale hier dazufügen ###
-
   Resistenzen[i,"MY"       ] <- codes[codes["Farm.ID"] == Farm_ID,"Q6.meanMY.cow"               ]              
   Resistenzen[i,"SCC"      ] <- codes[codes["Farm.ID"] == Farm_ID,"Q7.mean.SCC.11mo"            ]   
   Resistenzen[i,"CBC"      ] <- codes[codes["Farm.ID"] == Farm_ID,"Q13a.calvingbox_clean"       ]      
   Resistenzen[i,"DIA"      ] <- codes[codes["Farm.ID"] == Farm_ID,"Q17.IN_diarrhea.30d" ]       
   ### Neue numerische hier dazufügen ###
 }
-
 if(debug){View(Resistenzen)}                           # 236 Zeilen (ohne Farm 30)
 write.csv(Resistenzen      ,"ResistenzenU.csv"      )  # U=ungeschichtet (ein Spaltentyp wird unten geändert)
 ```
@@ -140,7 +115,6 @@ if(debug){View(Resistenzen)}
 ```{r}
 ResistenzenLE8000 <- Resistenzen[Resistenzen["MY"] <= 8000,]  # Less than or Equal to 8000
 ResistenzenGT8000 <- Resistenzen[Resistenzen["MY"]  > 8000,]  # Greater Than 8000
-
 if(debug){View(ResistenzenLE8000)}     # 116 Zeilen
 if(debug){View(ResistenzenGT8000)}     # 120 Zeilen
 ```

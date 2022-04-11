@@ -136,7 +136,7 @@ Hilfsfunktion}\label{bibliotheken-laden-hilfsfunktion}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ControlFlowTok{for}\NormalTok{( Schicht }\ControlFlowTok{in} \KeywordTok{c}\NormalTok{(}\StringTok{"GT8000"}\NormalTok{,}\StringTok{"LE8000"}\NormalTok{,}\StringTok{"U"}\NormalTok{) ) \{     }\CommentTok{# Greater Than 8000 / Less than or Equal to 8000 / Un-stratisfied}
+\ControlFlowTok{for}\NormalTok{( Schicht }\ControlFlowTok{in} \KeywordTok{c}\NormalTok{(}\StringTok{"U"}\NormalTok{, }\StringTok{"LE8000"}\NormalTok{,}\StringTok{"GT8000"}\NormalTok{) ) \{     }\CommentTok{# Un-stratisfied /  Less than or Equal to 8000 / Greater Than 8000 }
 \NormalTok{   FileIn <-}\StringTok{ }\KeywordTok{paste}\NormalTok{( }\StringTok{"Resistenzen"}\NormalTok{,Schicht,}\StringTok{".csv"}\NormalTok{ , }\DataTypeTok{sep=}\StringTok{""}\NormalTok{ )  }
 \NormalTok{   Resistenzen <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(FileIn)}
 
@@ -145,16 +145,21 @@ Hilfsfunktion}\label{bibliotheken-laden-hilfsfunktion}}
 
   \ControlFlowTok{if}\NormalTok{(debug)\{}\KeywordTok{View}\NormalTok{(Resistenzen)\}}
 
-\NormalTok{  df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{WM.gr  =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{WM.group,      }\CommentTok{# unabhängige Variablen extrahieren}
-                 \DataTypeTok{OLS.gr =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{OLS.group,     }\CommentTok{# Titel kürzen, sonst Platzprobleme ...}
-                 \DataTypeTok{IAC.gr =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{IAC.group, }
-                 \DataTypeTok{HSC.gr =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC.group,}
-                 \DataTypeTok{MY     =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{MY, }
-                 \DataTypeTok{SCC    =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{SCC, }
-                 \DataTypeTok{CBC    =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{CBC, }
-                 \DataTypeTok{DIA    =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{DIA)}
+\NormalTok{  df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{WM     =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{WM.group,    }\CommentTok{# unabhängige Variablen extrahieren}
+                   \DataTypeTok{OLS    =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{OLS.group,   }\CommentTok{# incl. Titel kürzen, sonst Platzprobleme ...}
+                   \DataTypeTok{IAC    =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{IAC.group, }
+                   \DataTypeTok{HSC0   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC0,}
+                   \DataTypeTok{HSC1   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC1,}
+                   \DataTypeTok{HSC2   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC2,}
+                   \CommentTok{#HSC3   = Resistenzen$HSC3,}
+                   \CommentTok{#HSC4   = Resistenzen$HSC4,}
+                   \CommentTok{#HSC5   = Resistenzen$HSC5,}
+                   \DataTypeTok{MY     =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{MY, }
+                   \DataTypeTok{SCC    =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{SCC, }
+                   \DataTypeTok{CBC    =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{CBC, }
+                   \DataTypeTok{DIA    =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{DIA)}
   \CommentTok{#View(df)}
-  \KeywordTok{print}\NormalTok{(}\KeywordTok{ggpairs}\NormalTok{(df, }\DataTypeTok{title =} \KeywordTok{paste}\NormalTok{(}\StringTok{"group:"}\NormalTok{,Schicht)))}
+  \KeywordTok{print}\NormalTok{(}\KeywordTok{ggpairs}\NormalTok{(df, }\DataTypeTok{title =} \KeywordTok{paste}\NormalTok{(}\StringTok{"group:"}\NormalTok{,Schicht), }\DataTypeTok{upper=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{continuos=}\KeywordTok{wrap}\NormalTok{(}\StringTok{"cor"}\NormalTok{,}\DataTypeTok{size=}\DecValTok{6}\NormalTok{))))}
   \KeywordTok{print}\NormalTok{(}\StringTok{""}\NormalTok{)}
 \NormalTok{\}}
 \end{Highlighting}
@@ -181,21 +186,22 @@ Hilfsfunktion}\label{bibliotheken-laden-hilfsfunktion}}
 \hypertarget{linear-depence}{%
 \subsection{Linear Depence?}\label{linear-depence}}
 
-As it implies multicollinearity, the logistic regression would be
-unreliable in its presence.
+Linear Dependence implies multicollinearity, so in its presence the
+logistic regression would be unreliable.
 
 The maximum correlation magnitude amounts to
 
 \begin{itemize}
 \tightlist
 \item
-  28.7\% in the unstratisfied analysis
+  53.2\% (HSC0 with HSC1) in the unstratisfied analysis
 \item
-  43.3\% in the stratisfied analysis
+  60.0\% (HSC0 with HSC1) in the stratisfied analysis MY \textgreater{}
+  8000
 \end{itemize}
 
-These are not yet a strong linear correlations, they don't hint to
-collinearity problems in the multivariate logistic regression.
+It might be better to not include HSC0 and HSC1 in one multivariate
+logistic regression to avoid collinearity problems.
 
 \hypertarget{outliers}{%
 \subsection{Outliers?}\label{outliers}}
@@ -205,6 +211,15 @@ interpretieren (für die anderen könnte man bessere Grafiken machen,
 hätte dann aber immer noch das Problem der beliebigen Kodierung).
 
 In Histogrammen und Streuplots sehe ich einen Ausreisser mit MY = 5000,
-das ist Farm 32. Ist sie als problematisch bekannt?
+das ist Farm 32.
+
+\begin{itemize}
+\tightlist
+\item
+  ist sie als problematisch bekannt?
+\item
+  das ist aber \emph{kein} Problem für die Regression: MY wird zur
+  Schichtung verwendet, nicht als unabhängige Variable
+\end{itemize}
 
 \end{document}

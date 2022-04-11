@@ -5,6 +5,7 @@ date: "05.04.2022"
 output:
   pdf_document:
     keep_tex: yes
+  word_document: default
 geometry: margin=0.5cm
 ---
 
@@ -27,7 +28,7 @@ Log <- function(string) {
 - plot variables and calculate correlations
 
 ```{r,warning=F,message=F}
-for( Schicht in c("GT8000","LE8000","U") ) {     # Greater Than 8000 / Less than or Equal to 8000 / Un-stratisfied
+for( Schicht in c("U", "LE8000","GT8000") ) {     # Un-stratisfied /  Less than or Equal to 8000 / Greater Than 8000 
    FileIn <- paste( "Resistenzen",Schicht,".csv" , sep="" )  
    Resistenzen <- read.csv(FileIn)
 
@@ -36,36 +37,44 @@ for( Schicht in c("GT8000","LE8000","U") ) {     # Greater Than 8000 / Less than
 
   if(debug){View(Resistenzen)}
 
-  df <- data.frame(WM.gr  = Resistenzen$WM.group,      # unabhängige Variablen extrahieren
-                 OLS.gr = Resistenzen$OLS.group,     # Titel kürzen, sonst Platzprobleme ...
-                 IAC.gr = Resistenzen$IAC.group, 
-                 HSC.gr = Resistenzen$HSC.group,
-                 MY     = Resistenzen$MY, 
-                 SCC    = Resistenzen$SCC, 
-                 CBC    = Resistenzen$CBC, 
-                 DIA    = Resistenzen$DIA)
+  df <- data.frame(WM     = Resistenzen$WM.group,    # unabhängige Variablen extrahieren
+                   OLS    = Resistenzen$OLS.group,   # incl. Titel kürzen, sonst Platzprobleme ...
+                   IAC    = Resistenzen$IAC.group, 
+                   HSC0   = Resistenzen$HSC0,
+                   HSC1   = Resistenzen$HSC1,
+                   HSC2   = Resistenzen$HSC2,
+                   #HSC3   = Resistenzen$HSC3,
+                   #HSC4   = Resistenzen$HSC4,
+                   #HSC5   = Resistenzen$HSC5,
+                   MY     = Resistenzen$MY, 
+                   SCC    = Resistenzen$SCC, 
+                   CBC    = Resistenzen$CBC, 
+                   DIA    = Resistenzen$DIA)
   #View(df)
-  print(ggpairs(df, title = paste("group:",Schicht)))
+  print(ggpairs(df, title = paste("group:",Schicht), upper=list(continuos=wrap("cor",size=6))))
   print("")
 }
 ```
 
 ## Linear Depence?
 
-As it implies multicollinearity, the logistic regression would be unreliable in its presence.
+Linear Dependence implies multicollinearity, so in its presence the logistic regression would be unreliable.
 
 The maximum correlation magnitude amounts to 
 
-- 28.7% in the unstratisfied analysis 
-- 43.3% in the stratisfied analysis 
+- 53.2% (HSC0 with HSC1) in the unstratisfied analysis 
+- 60.0% (HSC0 with HSC1) in the stratisfied analysis MY > 8000
 
-These are not yet a strong linear correlations, they don't hint to collinearity problems in the multivariate logistic regression.
+It might be better to not include HSC0 and HSC1 in one multivariate logistic regression to avoid collinearity problems.
 
 
 ## Outliers?
 
 Im wesentlichen sind nur die plots ohne diskrete Variablen gut zu interpretieren (für die anderen könnte man bessere Grafiken machen, hätte dann aber immer noch das Problem der beliebigen Kodierung). 
 
-In Histogrammen und Streuplots sehe ich einen Ausreisser mit MY = 5000, das ist Farm 32. Ist sie als problematisch bekannt?
+In Histogrammen und Streuplots sehe ich einen Ausreisser mit MY = 5000, das ist Farm 32. 
+
+- ist sie als problematisch bekannt? 
+- das ist aber *kein* Problem für die Regression: MY wird zur Schichtung verwendet, nicht als unabhängige Variable
 
 
