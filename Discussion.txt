@@ -1,10 +1,120 @@
+Liebe Lisa,
+
+danke für unsere Diskussion.
+
+Ich gehe noch sicher dass der Schichtname in allen plots enthalten ist, um Fehler zu vermeiden. Und ich gebe den einfachen Plots/Verteilungsplots unterschiedliche Namen (gerade gesehen dass die identisch sind, das ist auch verwechslungsanfällig). 
+
+Die einfachen plots und Tabellen mittels Nresistenzen.Rmd könnte ich auch noch automatisch über alle Schichten laufen, falls es die Arbeit einfacher macht? Mit Verteilungen.Rmd will ich das nicht machen - das braucht so viel Zeit, da ist es besser wenn man zwischendurch mal kontrolliert.
+
+Die nominale Variable "husbandray system calves" kodiere ich für Korrelation und Regression in 5 binären Variablen (nicht 3 - damit sind sie linear abhängiger, und wir müssen immer umdenken). Das Format der allem weiteren zugrundeliegenden Daten 
+  ResistenzenU.csv	ResistenzenLE8000.csv	ResistenzenGT8000.csv
+hat sich mit diesen Variablen vergrössert. Ich muss also NResistenzen.Rmd und Verteilungen.Rmd ein wenig umschreiben damit diese Programme damit klarkommen. Bisher identifizierten sie (quick aber etwas dirty) Variablen durch Spaltennummern, das stelle ich um auf Spaltennamen - dann ist es in Zukunft leichter, Variablen wegzunehmen oder hinzuzufügen. Hast du andere interessante unabhängige Variablen gefunden?
+
+Die AMU-Werte sind noch nicht da und dürften die multivariate logistische Regression ziemlich beeinflussen. Aber wir fangen schon mal mit dem model building an, um eine Idee zu kriegen wie der Hase läuft. Es gibt automatische Verfahren der Variablenselektion in SPSS aber auch in einer R-library (habe ich gerade gefunden) . Ich könnte ein .SAV Daten-file für SPSS erzeugen und du testest das, ich benutze R? Es ist bei sowas komplexem immer gut einen Vergleich zu haben.
+
+Schönen Gruss,
+Christoph    
+
+
 --------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Liebe Lisa,
+
+hier das update: Man kann Korrelationen aus nominalen Variablen nicht einfach berechnen da diese von der Kodierung abhängen würden. Sondern man kodiert die nominale Variable um in binäre "Dummy" Variablen. Ich habe 2 Umkodierungen ausprobiert:
+- sechs Variablen für Wert 0 bis 5
+-  nur 3 Variablen für Wert 0 bis 2, und z.B. 3=0+1 wieder zurückgerechnet
+
+Das sollten wir am Donnerstag besprechen, nach allem anderen.
+
+Schönen Gruss,
+Christoph
+
+---- On Wed, 06 Apr 2022 13:43:49 +0200 Lisa Windhofer <lisawindhofer.lw@gmail.com> wrote ----
+
+Hallo Christoph, 
+
+Vielen Dank für deine Nachrichten. Ich bin erst vom Urlaub zurück und hatte recht viel Arbeit, deshalb hab ich noch keine Zeit gehabt zu antworten.
+Wäre diese Woche entweder morgen Nachmittag oder sonst Freitag Vormittag möglich?
+La Tex-Installation hat geklappt und ich kann die Programme laufen lassen.
+Wegen der Sample size calculation hab ich gefragt, aber meine Betreuerin will es mir nicht schicken. Das Betreuungsverhältnis ist leider sehr schwierig.
+Ich kann es gerne nochmal ansprechen, aber ich weiß nicht ob sie es mir schicken wird.
+Ich denke nicht dass ich MY Schichtung für alle Antibiotika machen muss, ich werde aber nochmal nachfragen zur Sicherheit.
+
+Liebe Grüße
+Lisa
+
 --------------------------------------------------------------------------------------------
 
 Liebe Lisa,
 
 anbei Plots und Diskussion zur Variablenselektion für "mixed" logistic regression ("mixed" ist nicht in Beth, Trapp 4.ed. erklärt, meint vlt. numerische + nominale/binäre Variablen - das machen wir bestimmt. Und vlt. "mixed effect" - machen wir auch, da im Studienplan) :
-- ein Ausreisser (er beeinflusst jedes parametrische Verfahren stark)
+- ein Ausreisser (er beeinflusst jedes parametrische Verfahren stark)  
 - keine 2 Variablen sind linear abhängig (Test auf *einfache* Linearität aus plot + Korrelation. Das ist eine schwächere Bedingung als Absenz von Multikollinearität)
 
 Im Verlaufe der Regression sollten wir machen: 

@@ -1,7 +1,7 @@
 ---
 title: "Number of Resistances and Simple Plots"
 author: ''
-date: "04.04.2022"
+date: "16.04.2022"
 output:
   pdf_document:
     keep_tex: yes
@@ -22,7 +22,7 @@ Log <- function(string) {
 
 # MY Schicht Festlegen
 
-Die letzte Zeile zählt!
+Nur die letzte Zeile zählt!
 
 ```{r}
 Schicht <- "GT8000"    # Greater Than 8000
@@ -30,7 +30,7 @@ Schicht <- "LE8000"    # Less than or Equal to 8000
 Schicht <- "U"         # Un-stratisfied
 ```
 
-# Resistenzen.Rmd generated Resistenzen[Schicht].csv, Read it in
+# Resistenzen.Rmd erzeu Resistengtezen[Schicht].csv, das einlesen
 
 Und evtl. ansehen
 
@@ -51,15 +51,17 @@ Resistenzen pro Betrieb in neuer Tabelle "NResistenzen" zählen, Multirestenz do
 ```{r}
 ResRow  <- nrow(Resistenzen)  # Zeilen Resistenzen : 4 pro Betrieb
 NResRow <- ResRow/4           # Zeilen NResistenzen : 1 pro Betrieb
-NAntib  <- 15                 # wir untersuchen 15 Antibiotika (wird von Resistenzen.Rmd so aus 2 Excel files eingelesen)
+
+maxcol <- match("WM.group",names(Resistenzen)) - 1
+#NAntib  <- 15                 # wir untersuchen 15 Antibiotika (wird von Resistenzen.Rmd so aus 2 Excel files eingelesen)
 
 NResistenzen <- Resistenzen[0,]                          # header wie"Resistenzen"
 for(line in 1:NResRow){                                  # 1 bis 60, aber 30 fehlt
   i <- (line - 1)*4 + 1
   NResistenzen[line,] <- Resistenzen[(line - 1)*4 + 1,]  # WM.group etc. kopieren
-  NResistenzen[line,2:(NAntib+1)] <- 0                   # aber Antibiotika auf 0 setzen : hier später Resistenzen zählen
+  NResistenzen[line,2:maxcol] <- 0                       # aber Antibiotika auf 0 setzen : hier später Resistenzen zählen
 }
-for(col in 2:(NAntib+1)){
+for(col in 2:maxcol){
   NResistenzen[,col] <-  as.numeric(NResistenzen[,col])  # muss immer noch in type double konvertieren
 }
 if(debug){View(NResistenzen)} 
@@ -70,17 +72,18 @@ for(i in 1:ResRow){                             # Liniennummer (Betriebe in 4er 
   
   line <- floor((i-1)/4)+1                      # Liniennummer für dataframe NResistenzen
   
-  for(j in 2:(NAntib+1)){                            # Spaltennummer: Antibiotikum
-
-    if(substr(Resistenzen[i,j],1,1)==">"){   # wenn Resistenz
+  for(j in 2:maxcol){                           # Spaltennummer: Antibiotikum
+    if(substr(Resistenzen[i,j],1,1)==">"){      # wenn Resistenz
       Log(paste("  NResistenzen[",line,j,"]=",NResistenzen[line,j],typeof(NResistenzen[line,j]) ))
       NResistenzen[line,j] <- NResistenzen[line,j] + 1  # gef. Resistenz zählen
 } } } 
 
 NResistenzen$NRes   <- rep(0,NResRow)  # neue Spalte, zählt für jeden Betrieb Resistenzen über Antibiotika; erstmal 0
 NResistenzen$MultiR <- rep(F,NResRow)  # neue Spalte, dokumentiert für jeden Betrieb Multiresistenz; erstmal False
-for(line in 1:NResRow){              # 1 bis 60, aber 30 fehlt
-  for(col in 2:(NAntib+1)){
+
+print(paste("maxcol =",maxcol))
+for(line in 1:NResRow){                # 1 bis 60, aber 30 fehlt
+  for(col in 2:(maxcol)){
     if(NResistenzen[line,col] > 0){
       NResistenzen[line,"NRes"] <- NResistenzen[line,"NRes"]+1  # Resistenz zählen
     }
