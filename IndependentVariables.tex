@@ -101,7 +101,7 @@
 
 \title{Studies of Independent Variables}
 \author{}
-\date{\vspace{-2.5em}05.04.2022}
+\date{\vspace{-2.5em}11.04.2022}
 
 \begin{document}
 \maketitle
@@ -112,7 +112,6 @@ Hilfsfunktion}\label{bibliotheken-laden-hilfsfunktion}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#library(ggplot2)     # moderne plots}
 \KeywordTok{library}\NormalTok{(GGally)}
 
 \NormalTok{debug <-}\StringTok{ }\NormalTok{T           }\CommentTok{# debug printout}
@@ -123,26 +122,31 @@ Hilfsfunktion}\label{bibliotheken-laden-hilfsfunktion}}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{for-all-my-groups}{%
-\section{For all MY Groups :}\label{for-all-my-groups}}
+\hypertarget{fuxfcr-alle-my-gruppen}{%
+\section{Für alle MY Gruppen :}\label{fuxfcr-alle-my-gruppen}}
 
 \begin{itemize}
 \tightlist
 \item
-  Resistenzen.Rmd generated Resistenzen{[}Schicht{]}.csv, read it in
+  Resistenzen.Rmd erzeugte Resistenzen{[}Schicht{]}.csv, diese einlesen
 \item
-  plot variables and calculate correlations
+  Variablen plotten und Korrelationen berechnen
 \end{itemize}
+
+\hypertarget{inklusive-variablen-hsc0-hsc2}{%
+\subsection{``Inklusive'' Variablen
+HSC0-HSC2}\label{inklusive-variablen-hsc0-hsc2}}
+
+Um die Anzahl der Variablen und evtl. die Korrelationen zu reduzieren,
+habe ich hier wieder zurückgerechnet: Wir haben z.B. 3 = 0+1, also habe
+ich im Fall husbandry\_system\_calves = 3 die Variablen HSC0 und HSC1
+auf 1 gesetzt.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{for}\NormalTok{( Schicht }\ControlFlowTok{in} \KeywordTok{c}\NormalTok{(}\StringTok{"U"}\NormalTok{, }\StringTok{"LE8000"}\NormalTok{,}\StringTok{"GT8000"}\NormalTok{) ) \{     }\CommentTok{# Un-stratisfied /  Less than or Equal to 8000 / Greater Than 8000 }
-\NormalTok{   FileIn <-}\StringTok{ }\KeywordTok{paste}\NormalTok{( }\StringTok{"Resistenzen"}\NormalTok{,Schicht,}\StringTok{".csv"}\NormalTok{ , }\DataTypeTok{sep=}\StringTok{""}\NormalTok{ )  }
-\NormalTok{   Resistenzen <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(FileIn)}
-
-  \CommentTok{# csv schreiben fügt vorne Index-Spalte an; diese entfernen :}
-\NormalTok{  Resistenzen[,}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\OtherTok{NULL}                      
-
+\NormalTok{  Resistenzen <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{( }\StringTok{"Resistenzen"}\NormalTok{,Schicht,}\StringTok{".csv"}\NormalTok{ , }\DataTypeTok{sep=}\StringTok{""}\NormalTok{ ) )}
+\NormalTok{  Resistenzen[,}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\OtherTok{NULL}         \CommentTok{# csv schreiben fügt vorne Index-Spalte an; diese entfernen             }
   \ControlFlowTok{if}\NormalTok{(debug)\{}\KeywordTok{View}\NormalTok{(Resistenzen)\}}
 
 \NormalTok{  df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{WM     =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{WM.group,    }\CommentTok{# unabhängige Variablen extrahieren}
@@ -151,14 +155,10 @@ Hilfsfunktion}\label{bibliotheken-laden-hilfsfunktion}}
                    \DataTypeTok{HSC0   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC0,}
                    \DataTypeTok{HSC1   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC1,}
                    \DataTypeTok{HSC2   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC2,}
-                   \CommentTok{#HSC3   = Resistenzen$HSC3,}
-                   \CommentTok{#HSC4   = Resistenzen$HSC4,}
-                   \CommentTok{#HSC5   = Resistenzen$HSC5,}
                    \DataTypeTok{MY     =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{MY, }
                    \DataTypeTok{SCC    =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{SCC, }
                    \DataTypeTok{CBC    =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{CBC, }
                    \DataTypeTok{DIA    =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{DIA)}
-  \CommentTok{#View(df)}
   \KeywordTok{print}\NormalTok{(}\KeywordTok{ggpairs}\NormalTok{(df, }\DataTypeTok{title =} \KeywordTok{paste}\NormalTok{(}\StringTok{"group:"}\NormalTok{,Schicht), }\DataTypeTok{upper=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{continuos=}\KeywordTok{wrap}\NormalTok{(}\StringTok{"cor"}\NormalTok{,}\DataTypeTok{size=}\DecValTok{6}\NormalTok{))))}
   \KeywordTok{print}\NormalTok{(}\StringTok{""}\NormalTok{)}
 \NormalTok{\}}
@@ -184,31 +184,29 @@ Hilfsfunktion}\label{bibliotheken-laden-hilfsfunktion}}
 \end{verbatim}
 
 \hypertarget{linear-depence}{%
-\subsection{Linear Depence?}\label{linear-depence}}
+\subsubsection{Linear Depence?}\label{linear-depence}}
 
 Linear Dependence implies multicollinearity, so in its presence the
 logistic regression would be unreliable.
 
-The maximum correlation magnitude amounts to
+The correlations with maximum magnitude are
 
 \begin{itemize}
 \tightlist
 \item
-  53.2\% (HSC0 with HSC1) in the unstratisfied analysis
+  -53.2\% (HSC0 versus HSC1) in the unstratisfied analysis
 \item
-  60.0\% (HSC0 with HSC1) in the stratisfied analysis MY \textgreater{}
-  8000
+  -60.0\% (HSC0 versus HSC1) in the stratisfied analysis MY
+  \textgreater{} 8000
 \end{itemize}
 
-It might be better to not include HSC0 and HSC1 in one multivariate
-logistic regression to avoid collinearity problems.
+Due to collinearity problems, it might not be possible to include HSC0
+and HSC1 in one multivariate logistic regression.
 
 \hypertarget{outliers}{%
-\subsection{Outliers?}\label{outliers}}
+\subsubsection{Outliers?}\label{outliers}}
 
-Im wesentlichen sind nur die plots ohne diskrete Variablen gut zu
-interpretieren (für die anderen könnte man bessere Grafiken machen,
-hätte dann aber immer noch das Problem der beliebigen Kodierung).
+Einfach zu interpretieren sind nur die plots ohne diskrete Variablen.
 
 In Histogrammen und Streuplots sehe ich einen Ausreisser mit MY = 5000,
 das ist Farm 32.
@@ -221,5 +219,64 @@ das ist Farm 32.
   das ist aber \emph{kein} Problem für die Regression: MY wird zur
   Schichtung verwendet, nicht als unabhängige Variable
 \end{itemize}
+
+\hypertarget{exklusive-variablen-hsc0-hsc5}{%
+\subsection{``Exklusive'' Variablen
+HSC0-HSC5}\label{exklusive-variablen-hsc0-hsc5}}
+
+Die ursprünglichen Variablen
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{( Schicht }\ControlFlowTok{in} \KeywordTok{c}\NormalTok{(}\StringTok{"U"}\NormalTok{, }\StringTok{"LE8000"}\NormalTok{,}\StringTok{"GT8000"}\NormalTok{) ) \{     }\CommentTok{# Un-stratisfied /  Less than or Equal to 8000 / Greater Than 8000 }
+\NormalTok{  Resistenzen <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{( }\StringTok{"ResistenzenHSC012345/Resistenzen"}\NormalTok{,Schicht,}\StringTok{".csv"}\NormalTok{ , }\DataTypeTok{sep=}\StringTok{""}\NormalTok{ ) )}
+\NormalTok{  Resistenzen[,}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\OtherTok{NULL}         \CommentTok{# csv schreiben fügt vorne Index-Spalte an; diese entfernen             }
+  \ControlFlowTok{if}\NormalTok{(debug)\{}\KeywordTok{View}\NormalTok{(Resistenzen)\}}
+
+\NormalTok{  df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{HSC0   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC0,}
+                   \DataTypeTok{HSC1   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC1,}
+                   \DataTypeTok{HSC2   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC2,}
+                   \DataTypeTok{HSC3   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC3,}
+                   \DataTypeTok{HSC4   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC4,}
+                   \DataTypeTok{HSC5   =}\NormalTok{ Resistenzen}\OperatorTok{$}\NormalTok{HSC5)}
+  \KeywordTok{print}\NormalTok{(}\KeywordTok{ggpairs}\NormalTok{(df, }\DataTypeTok{title =} \KeywordTok{paste}\NormalTok{(}\StringTok{"group:"}\NormalTok{,Schicht), }\DataTypeTok{upper=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{continuos=}\KeywordTok{wrap}\NormalTok{(}\StringTok{"cor"}\NormalTok{,}\DataTypeTok{size=}\DecValTok{6}\NormalTok{))))}
+  \KeywordTok{print}\NormalTok{(}\StringTok{""}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{IndependentVariables_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{verbatim}
+## [1] ""
+\end{verbatim}
+
+\includegraphics{IndependentVariables_files/figure-latex/unnamed-chunk-3-2.pdf}
+
+\begin{verbatim}
+## [1] ""
+\end{verbatim}
+
+\includegraphics{IndependentVariables_files/figure-latex/unnamed-chunk-3-3.pdf}
+
+\begin{verbatim}
+## [1] ""
+\end{verbatim}
+
+Die Korrelationen sind alle negativ, das ist hier klar: nur eine der
+Variablen kann 1 sein, die anderen dann alle 0
+
+Korrelationen mit maximalem Betrag:
+
+\begin{itemize}
+\tightlist
+\item
+  -0.410 HSC1 versus HSC0 in der ungeschichteten Analyse
+\item
+  -0.450 HSC1 versus HSC0 in der Schicht MY \textgreater{} 8000
+\end{itemize}
+
+In der Tat etwas kleiner als für die ``inklusiven Variablen''! Wir
+sollten diskutieren, welche Variablen besser zu interpretieren sind.
 
 \end{document}
