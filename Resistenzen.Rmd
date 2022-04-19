@@ -29,8 +29,10 @@ if(debug){View(codes)}
 ```
 
 ```{r}
-Resistenzen <- read.xlsx("MIC_E. coli environment_L Windhofer_final.xls", sheetName="Abfrage")[6:22]   # wichtige Spalten einlesen: Probe, Antibiotika
-Resistenzen[2] <- NULL                  # die ist nicht wichtig
+# wichtige Spalten einlesen: "Patienten | Patienten-/Tierbezeichnung1", "Probennr. Keim-ID", "AMP"..."SMX"
+Resistenzen <- read.xlsx("MIC_E. coli environment_L Windhofer_final.xls", sheetName="Abfrage")[6:22]   
+
+Resistenzen[2] <- NULL                  # "Probennr. Keim-ID" ist nicht wichtig
 if(debug){View(Resistenzen)}            # 240 Zeilen
 ```
 

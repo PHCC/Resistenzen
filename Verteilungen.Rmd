@@ -1,7 +1,7 @@
 ---
 title: "Verteilungen"
 author: ''
-date: "28.03.2022"
+date: "19.04.2022"
 output:
   pdf_document:
     keep_tex: yes
@@ -97,7 +97,7 @@ graphisch <- function(groups,antib, anfang,ende, schrittBin,schrittLab) {
     listdfs <- list(Resistenzen    , ResistenzenHSC0, ResistenzenHSC1, 
                     ResistenzenHSC2, ResistenzenHSC3, ResistenzenHSC4, ResistenzenHSC5)  
     Titel   <- c(   "arbitrary HSC          ", 
-                    "0: stable w\\o  outlet", "1: stable with outlet", "2: outdoors          ","0+1                  ","1+2                  ","0+2                  ")
+                    "0: stable w\\o  outlet", "1: stable with outlet", "2: outdoors          ","3 = 0 + 1      ","4 = 1 + 2      ","5 = 0 + 2       ")
   }
   
   for (i in 2:length(Titel)){     # nicht 1. plot "XY oder nicht"  deskriptive Statistik - geht sicher o. eigene DFs!!? 
@@ -177,7 +177,7 @@ graphisch <- function(groups,antib, anfang,ende, schrittBin,schrittLab) {
   seqLab_cutR <- seqLab[1:length(seqLab)-1]           
   Log("seqLab_cutR:");Log(seqLab_cutR)
     
-  seqLab_cutLR <- seqLab_cutR[2:length(seqLab_cutR)]  # ... [2:...] klappt nicht
+  seqLab_cutLR <- seqLab_cutR[2:length(seqLab_cutR)]  
   Log("seqLab_cutLR:");Log(seqLab_cutLR)
     
   Labels <- c(paste0("<=",anfang),seqLab_cutLR)
@@ -186,7 +186,6 @@ graphisch <- function(groups,antib, anfang,ende, schrittBin,schrittLab) {
   if(Ende) { Labels <- c(Labels,paste0(">",ende)) }
   Log("Labels, 2:");Log(Labels)
 
-  #Ylab <- paste("Frequenz",antib,Titel[i])
   Ylab <- "Frequency"
   Xlab <- "Dose"
 
