@@ -1,7 +1,7 @@
 ---
 title: "Number of Resistances and Simple Plots"
 author: ''
-date: "16.04.2022"
+date: "20.04.2022"
 output:
   pdf_document:
     keep_tex: yes
@@ -25,12 +25,12 @@ Log <- function(string) {
 Nur die letzte Zeile zählt!
 
 ```{r}
-Schicht <- "GT8000"    # Greater Than 8000
-Schicht <- "LE8000"    # Less than or Equal to 8000
 Schicht <- "U"         # Un-stratisfied
+Schicht <- "LE8000"    # Less than or Equal to 8000
+Schicht <- "GT8000"    # Greater Than 8000
 ```
 
-# Resistenzen.Rmd erzeu Resistengtezen[Schicht].csv, das einlesen
+# Resistenzen.Rmd erzeugte Resistenzen[Schicht].csv, das einlesen
 
 Und evtl. ansehen
 
@@ -81,7 +81,7 @@ for(i in 1:ResRow){                             # Liniennummer (Betriebe in 4er 
 NResistenzen$NRes   <- rep(0,NResRow)  # neue Spalte, zählt für jeden Betrieb Resistenzen über Antibiotika; erstmal 0
 NResistenzen$MultiR <- rep(F,NResRow)  # neue Spalte, dokumentiert für jeden Betrieb Multiresistenz; erstmal False
 
-print(paste("maxcol =",maxcol))
+#print(paste("maxcol =",maxcol))
 for(line in 1:NResRow){                # 1 bis 60, aber 30 fehlt
   for(col in 2:(maxcol)){
     if(NResistenzen[line,col] > 0){
@@ -102,7 +102,7 @@ write.csv(NResistenzen, paste( "N", FileIn , sep="" ))
 graphisch2 <- function(gruppe, join, antibiotikum) {
   group <- Resistenzen[,gruppe ] 
   antib      <- Resistenzen[,antibiotikum ]
-  dir.create(paste("plots_",Schicht,sep=""))             # directory for writing the plots
+  dir.create(paste("plots_",Schicht,sep=""))             # directory for the plot files
 
   X <- c()
   Y <- c()
@@ -136,6 +136,8 @@ graphisch2 <- function(gruppe, join, antibiotikum) {
   if( gruppe == "CBC"      ){xlab <- "calvingbox_clean"}    
   if( gruppe == "DIA"      ){xlab <- "IN_diarrhea<30d"}               
   ### Neue numerische hier dazufügen ###
+  
+  xlab1 <- paste(xlab, "    (MY group", Schicht,")")
 
   min <- min(as.numeric(Resistenzen[,gruppe]), na.rm=T)
   max <- max(as.numeric(Resistenzen[,gruppe]), na.rm=T)
@@ -147,10 +149,10 @@ graphisch2 <- function(gruppe, join, antibiotikum) {
   print( ggplot(df, aes(X, Y)) + 
     geom_point() +
     xlim(min,max) +
-    xlab(xlab) + ylab(ylab)  + 
+    xlab(xlab1) + ylab(ylab)  + 
     ggtitle(paste("Number of", ylab, join,xlab))   
   )
-  ggsave(paste("plots_",Schicht,"/", Schicht,"_",gruppe,"_",antibiotikum,".png", sep=""))
+  ggsave(paste("plots_",Schicht,"/plot_", Schicht,"_",gruppe,"_",antibiotikum,".png", sep=""))
 }
 ```
 
