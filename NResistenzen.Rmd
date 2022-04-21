@@ -1,7 +1,7 @@
 ---
 title: "Number of Resistances and Simple Plots"
 author: ''
-date: "20.04.2022"
+date: "21.04.2022"
 output:
   pdf_document:
     keep_tex: yes
@@ -30,12 +30,12 @@ Schicht <- "LE8000"    # Less than or Equal to 8000
 Schicht <- "GT8000"    # Greater Than 8000
 ```
 
-# Resistenzen.Rmd erzeugte Resistenzen[Schicht].csv, das einlesen
+# Resistenzen.Rmd erzeugte Resistenzen_[Schicht].csv, das einlesen
 
 Und evtl. ansehen
 
 ```{r}
-FileIn <- paste( "Resistenzen",Schicht,".csv" , sep="" )  # Fileout ist nur N davorgehängt
+FileIn <- paste( "Resistenzen_",Schicht,".csv" , sep="" )  # Fileout ist nur N davorgehängt
 Resistenzen <- read.csv(FileIn)
 
 # csv schreiben fügt vorne Index-Spalte an; diese entfernen :
@@ -46,7 +46,7 @@ if(debug){View(Resistenzen)}
 
 # Resistenzen pro Betrieb
 
-Resistenzen pro Betrieb in neuer Tabelle "NResistenzen" zählen, Multirestenz dokumentieren und als NResistenzen.csv ausschreiben
+Resistenzen pro Betrieb in neuer Tabelle "NResistenzen" zählen, Multirestenz dokumentieren und als NResistenzen_[Schicht].csv ausschreiben
 
 ```{r}
 ResRow  <- nrow(Resistenzen)  # Zeilen Resistenzen : 4 pro Betrieb

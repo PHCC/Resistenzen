@@ -1,7 +1,7 @@
 ---
 title: "Verteilungen"
 author: ''
-date: "19.04.2022"
+date: "21.04.2022"
 output:
   pdf_document:
     keep_tex: yes
@@ -14,16 +14,15 @@ geometry: margin=0.5cm
 ```{r, warning=F, error=F, message=F}
 library(stringr)    # String-verarbeitung
 library(ggplot2)    # moderne plots
-#library(gridExtra)
 
-debug <- T  # debug printout
-debug <- F  # kein debug printout
+debug <- T          #      debug output
+debug <- F          # kein debug output
 Log <- function(string) {
   if(debug){print(string)}  
 }
 ```
 
-# ResistenzenU.csv o. ResistenzenLE8000.csv o.ResistenzenGT8000.csv einlesen
+# Resistenzen_U.csv o. Resistenzen_LE8000.csv o.Resistenzen_GT8000.csv einlesen
 
 Diese Tabellen wurden von Resistenzen.Rmd erzeugt. Sie evtl. auch ansehen
 
@@ -32,7 +31,7 @@ Schicht <- "LE8000"
 Schicht <- "GT8000"
 Schicht <- "U"
 
-Resistenzen <- read.csv(paste("Resistenzen",Schicht,".csv",sep=""))
+Resistenzen <- read.csv(paste("Resistenzen_",Schicht,".csv",sep=""))
 
 # csv raussschreiben u. wieder einlesen fügt vorne Index-Spalte an; diese entfernen :
 Resistenzen[,1] <- NULL                      
@@ -204,11 +203,11 @@ graphisch <- function(groups,antib, anfang,ende, schrittBin,schrittLab) {
     facet_grid(reformulate(".",groups))    +       # vertikal   geschichtet. reformulate gibt Formel (IAC.group ~ .)  etc.
     #facet_grid(reformulate(groups,"."))    +      # horizontal geschichtet - war weniger schön.
     
-    ggtitle(paste(antib,"for different",groups))
+    ggtitle(paste(antib,"for different",groups, "    (MY group", Schicht,")"))
   
 
   print(plot)
-  ggsave(paste("verteilungen_",Schicht,"/", Schicht,"_",groups,"_",antib,".png", sep=""))
+  ggsave(paste("verteilungen_",Schicht,"/verteilung_", Schicht,"_",groups,"_",antib,".png", sep=""))
 
 }
 ```
@@ -473,12 +472,11 @@ Jetzt sind alle Verteilungen geplotted und deskriptiv analysiert, ausser:
 Kausalitäten studieren mittels Regressionen :
 
 * Kausalitätsgraph
-* Lineare Regressionen?
-* multivariable logistische Regression ... mixed effects?
+* Lineare Regressionen
+* multivariable logistische Regression, mixed effects
 
-\newpage
-
-* vs Assoziation:
-  - Vorlesung Christian: "Kausalität nur wenn immer der Fall"-!?
-  - Buch Scutari: ??
-
+---
+# vs Assoziation:
+#  - Vorlesung Christian: "Kausalität nur wenn immer der Fall"-!?
+#  - Buch Scutari: ??
+---

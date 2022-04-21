@@ -3,23 +3,23 @@
                                         Resistenzen.Rmd                                           (in Resistenzen.Rmd muss man nie ...     ) 
                                                |
                                                V                                                  (... etwas ändern:                       )
-                 ResistenzenU.csv + ResistenzenLE8000.csv + ResistenzenGT8000.csv                 (es schreibt immer diese 3 files         )
+                 Resistenzen_U.csv + Resistenzen_LE8000.csv + Resistenzen_GT8000.csv              (es schreibt immer diese 3 files         )
                            |                  |                      |
                    NResistenzen.Rmd    NResistenzen.Rmd        NResistenzen.Rmd                   (in NResistenzen.Rmd muss man für jede   )
                            |                  |                      |                            (gewünschte Schicht die Zuweisung        )
                            V                  V                      V                            (Schicht <- XYZ                          )
-                  NResistenzenU.csv  NResistenzenLE8000.csv   NResistenzenGT8000.csv              (entsprechend anpassen und das Programm  )
-                  NResistenzenU.pdf  NResistenzenLE8000.pdf   NResistenzenGT8000.pdf              (einmal laufen lassen                    )
-                  plots_U/           plots_LE8000/            plots_GT8000/                       (directories mit den einfachen plots     )
+                  NResistenzen_U.csv  NResistenzen_LE8000.csv   NResistenzen_GT8000.csv           (entsprechend anpassen und das Programm  )
+                  NResistenzen_U.pdf  NResistenzen_LE8000.pdf   NResistenzen_GT8000.pdf           (einmal laufen lassen                    )
+                  plots_U/            plots_LE8000/             plots_GT8000/                     (directories mit den einfachen plots     )
 
 (Um X.pdf zu erzeugen muss man "> knit > knit to pdf" laufen lassen, danach das erzeugte pdf umbenennen, diskutieren wir am besten wenn bei dir LaTeX läuft. Aber wichtiger sind wohl die einfachen plots)
 
 
-                 ResistenzenU.csv   ResistenzenLE8000.csv   ResistenzenGT8000.csv                 (es schreibt immer diese 3 files         )
+                 Resistenzen_U.csv   Resistenzen_LE8000.csv   Resistenzen_GT8000.csv              (es schreibt immer diese 3 files         )
                            |                  |                      |
                    Verteilungen.Rmd    Verteilungen.Rmd        Verteilungen.Rmd                   (in Verteilungen.Rmd muss man für jede   )
                            |                  |                      |                            (gewünschte Schicht die Zuweisung        )
                            V                  V                      V                            (Schicht <- XYZ entspr. anpassen u.      )
-                   Verteilungen.Rmd  VerteilungenLE8000.pdf   VerteilungenGT8000.pdf              (das Programm einmal laufen lassen       )
+                Verteilungen_U.pdf  Verteilungen_LE8000.pdf   Verteilungen_GT8000.pdf             (das Programm einmal laufen lassen       )
                    Verteilungen_U/   Verteilungen_LE8000/     Verteilungen_GT8000/                (enthalten die barplots                  )
 

@@ -1,7 +1,7 @@
 ---
 title: "Resistenzen.Rmd : Vorbereitung Daten"
 author: ""
-date: "09.04.2022"
+date: "21.04.2022"
 output:
   pdf_document:
     keep_tex: yes   # LaTeX und vor allem Figuren nicht löschen
@@ -33,6 +33,7 @@ if(debug){View(codes)}
 Resistenzen <- read.xlsx("MIC_E. coli environment_L Windhofer_final.xls", sheetName="Abfrage")[6:22]   
 
 Resistenzen[2] <- NULL                  # "Probennr. Keim-ID" ist nicht wichtig
+
 if(debug){View(Resistenzen)}            # 240 Zeilen
 ```
 
@@ -42,6 +43,7 @@ if(debug){View(Resistenzen)}            # 240 Zeilen
 col1_ <- str_replace(Resistenzen[[1]], "-",  "")     # evtl. Bindestrich weg
 Resistenzen[[1]] <- substr(col1_, 1,nchar(col1_)-2)  # dann sind die letzten 2 Zeichen überflüssig
 names(Resistenzen)[1] <- "Farm.ID"                   # Diese Spalte enhält jetzt nur noch die Farm IDs
+
 if(debug){View(Resistenzen)}                         
 ```
 
@@ -109,7 +111,8 @@ for (i in 1:ResRow ) {                  # Schleife über alle Einträge
   ### Neue numerische hier dazufügen ###
 }
 if(debug){View(Resistenzen)}                           # 236 Zeilen (ohne Farm 30)
-write.csv(Resistenzen      ,"ResistenzenU.csv"      )  # U=ungeschichtet (ein Spaltentyp wird unten geändert)
+
+write.csv(Resistenzen      ,"Resistenzen_U.csv"      )  # U=ungeschichtet (ein Spaltentyp wird unten geändert)
 ```
 
 # Data Frames für die 2 MY-Schichten, als 2 CSV Dateien rausschreiben
@@ -128,6 +131,6 @@ if(debug){View(ResistenzenGT8000)}     # 120 Zeilen
 ```
 
 ```{r}
-write.csv(ResistenzenLE8000,"ResistenzenLE8000.csv")
-write.csv(ResistenzenGT8000,"ResistenzenGT8000.csv")
+write.csv(ResistenzenLE8000,"Resistenzen_LE8000.csv")
+write.csv(ResistenzenGT8000,"Resistenzen_GT8000.csv")
 ```
