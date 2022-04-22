@@ -1,5 +1,32 @@
 Liebe Lisa,
 
+ich habe das angekündigte programmiert - Schichtname in Grafik und Dateiname, aussagekräftigere Dateinamen. Alle Programme arbeiten jetzt mit Spaltennamen, nicht mehr Spaltennummern um den Einschluss neuerer Variablen zu erleichtern.
+
+Es ist nicht so toll, alle diese Dateien zu verschicken. Es gibt jetzt ein ein github.com repository
+
+https://www.github.com/PHCC/ ??????
+
+(momentan ist es public und jeder kann es lesen. Ich könnte es auch private machen, du meldest dich bei github.com an und ich gebe dir Zugriffsrechte)
+
+Das ist ein web-backend zum code versioning system git. Git wird primär in Programmier-teams verwendet, hilft aber auch schon viel wenn ich alleine programmiere. Wir haben damit ein internet-backup von allen Programm-Versionen incl. input, output, Dokumentation der Versionen und anderen wichtigen Dateien wie Datenfluss.txt .
+
+Wenn du eins der Programme laufen lassen willst (oder Datenfluss.txt lesen, oder deine Resultate mit meinen vergleichen), schau bitte nach ob du die aktuellste Version hast, z.B.
+https://www.github.com/PHCC/ ??????
+
+Falls nicht, hole sie bitte mit copy und paste (das ist nicht die offizielle Methode, aber geht auch für mich manchmal schneller als mit git). Bilder kannst du einfach im web-browser ansehen.
+
+Nächste Woche möchte ich noch kurz kontrollieren ob die 5 binären Variablen für "husbandray system calves" überall konsistent sind und dann mit dem model building anfangen wie in meiner letzten mail beschrieben.
+
+Ist alles verständlich? Wir können fast jederzeit diskutieren, schreib mir einfach wenn du es willst.
+
+Schönes Wochenende!
+Christoph
+
+
+--------------------------------------------------------------------------------------------
+
+Liebe Lisa,
+
 danke für unsere Diskussion.
 
 Ich gehe noch sicher dass der Schichtname in allen plots enthalten ist, um Fehler zu vermeiden. Und ich gebe den einfachen Plots/Verteilungsplots unterschiedliche Namen (gerade gesehen dass die identisch sind, das ist auch verwechslungsanfällig). 
@@ -14,7 +41,6 @@ Die AMU-Werte sind noch nicht da und dürften die multivariate logistische Regre
 
 Schönen Gruss,
 Christoph    
-
 
 --------------------------------------------------------------------------------------------
 
