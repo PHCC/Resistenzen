@@ -2,18 +2,17 @@ Liebe Lisa,
 
 ich habe das angekündigte programmiert - Schichtname in Grafik und Dateiname, aussagekräftigere Dateinamen. Alle Programme arbeiten jetzt mit Spaltennamen, nicht mehr Spaltennummern um den Einschluss neuerer Variablen zu erleichtern.
 
-Es ist nicht so toll, alle diese Dateien zu verschicken. Es gibt jetzt ein ein github.com repository
+Es ist nicht so toll, alle diese Dateien zu verschicken. Es gibt auch ein ein github.com repository
 
-https://www.github.com/PHCC/ ??????
+https://github.com/PHCC/Resistenzen
 
-(momentan ist es public und jeder kann es lesen. Ich könnte es auch private machen, du meldest dich bei github.com an und ich gebe dir Zugriffsrechte)
+(momentan ist es public und jeder kann es lesen. Falls dir lieber kann ich es private machen, du meldest dich bei github.com an und ich gebe dir Zugriffsrechte)
 
-Das ist ein web-backend zum code versioning system git. Git wird primär in Programmier-teams verwendet, hilft aber auch schon viel wenn ich alleine programmiere. Wir haben damit ein internet-backup von allen Programm-Versionen incl. input, output, Dokumentation der Versionen und anderen wichtigen Dateien wie Datenfluss.txt .
+Das ist eine cloud und ein frontend zum code versioning system git. Git wird primär in Programmier-teams verwendet, hilft aber auch schon viel wenn ich alleine programmiere. Wir haben damit ein internet-backup von allen Programm-Versionen incl. input, output, Dokumentation der Versionen und anderen wichtigen Dateien wie Datenfluss.txt . Wenn irgendwas nicht mehr läuft wie gewünscht kann ich leicht mit früheren Versionen vergleichen.
 
-Wenn du eins der Programme laufen lassen willst (oder Datenfluss.txt lesen, oder deine Resultate mit meinen vergleichen), schau bitte nach ob du die aktuellste Version hast, z.B.
-https://www.github.com/PHCC/ ??????
+Wenn du eins der Programme laufen lassen willst (oder Datenfluss.txt lesen, oder deine Resultate mit meinen vergleichen - pdf, png, csv), schau bitte nach ob du die aktuellste Version hast, du klickst z.B. auf Verteilungen.Rmd .
 
-Falls nicht, hole sie bitte mit copy und paste (das ist nicht die offizielle Methode, aber geht auch für mich manchmal schneller als mit git). Bilder kannst du einfach im web-browser ansehen.
+Falls du nicht die neueste Version hast, hole sie bitte mit copy und paste (das ist nicht die offizielle Methode, aber geht auch für mich manchmal schneller als mit git). pdf-Dateien, Bilder und csv-Dateien kannst du einfach im web-browser ansehen.
 
 Nächste Woche möchte ich noch kurz kontrollieren ob die 5 binären Variablen für "husbandray system calves" überall konsistent sind und dann mit dem model building anfangen wie in meiner letzten mail beschrieben.
 
