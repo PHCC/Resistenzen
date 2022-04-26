@@ -27,9 +27,9 @@ Log <- function(string) {
 Diese Tabellen wurden von Resistenzen.Rmd erzeugt. Sie evtl. auch ansehen
 
 ```{r}
+Schicht <- "U"
 Schicht <- "LE8000"
 Schicht <- "GT8000"
-Schicht <- "U"
 
 Resistenzen <- read.csv(paste("Resistenzen_",Schicht,".csv",sep=""))
 
