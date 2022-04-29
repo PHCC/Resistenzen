@@ -1,0 +1,105 @@
+---
+title: "Logistische Regressionen"
+author: ''
+date: "28.04.2022"
+output:
+  pdf_document:
+    keep_tex: yes
+  word_document: default
+geometry: margin=0.5cm
+---
+
+# Libraries und Hilfsfunktionen
+
+```{r}
+library(dplyr)
+
+debug <- F           # kein debug printout
+debug <- T           # debug printout
+Log <- function(string) {
+  if(debug){print(string)}  
+}
+```
+
+# Input NResistenzen_U.csv
+
+```{r,warning=F,message=F}
+for( Schicht in c("U")){       #, "LE8000","GT8000") ) {     # Un-stratisfied /  Less than or Equal to 8000 / Greater Than 8000 
+  NResistenzen <- read.csv(paste( "NResistenzen_",Schicht,".csv" , sep="" ) )
+  NResistenzen[,1] <- NULL         # csv schreiben fügt vorne Index-Spalte an; diese entfernen       ??????      
+  if(debug){View(NResistenzen)}
+}
+```
+
+Später die 2 Schichten. 
+
+# Unabhängige und abhängige Variablen selektieren
+
+- unabhängige Variablen: WM.group OLS.group	IAC.group	HSC.group	HSC1	HSC2	HSC3	HSC4	HSC5	MY	SCC	CBC	DIA
+- abhängige Variablen: MDR, später alle Antibiotika einzeln
+
+```{r}
+  df <- NResistenzen %>% select(WM.group, OLS.group, IAC.group, HSC0,HSC1,HSC2,HSC3,HSC4,HSC5, MY, SCC, CBC, DIA, MultiR)
+  df$MultiR <- ifelse(df$MultiR,1,0)            # TRUE, FALSE umkodieren in 1, 0 für Regressionen
+  #View(df)
+```
+
+# Univariat
+
+```{r}
+for( indep_var in c("WM.group","OLS.group","IAC.group","HSC0","HSC1","HSC2","HSC3","HSC4","HSC5", "MY", "SCC", "CBC", "DIA") ){
+ # model <- glm( MultiR ~ indep_var, data = NResistenzen, family = binomial )  OK
+  fml <- reformulate(indep_var,"MultiR")
+  print(fml)
+  model <- glm( fml, data = NResistenzen, family = binomial )      # logit ist Standard-link function für binomial
+  print( summary(model) )
+  
+  
+  print("-----------------------------------------------------------------")
+}
+```
+Multiresistenz steigt mit WM.group (das sahen wir schon aus Verteilungen und Anzahl der Resistenzen) und OLS.group . Allerdings ist die Signifikanz schwach.
+Alle anderen Gruppen (Husbandry System Calves, MY, SCC, CBC, DIA)  machen nie einen signifikanten Unterschied (MY nur interessehalber untersucht, das wird die Schichtvariable).
+
+1-Var plot, lohnt kaum: http://www.sthda.com/english/articles/36-classification-methods-essentials/151-logistic-regression-essentials-in-r/ 
+  train.data %>%
+  ggplot(aes(glucose, prob)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "glm", method.args = list(family = "binomial")) +
+  labs(
+    title = "Logistic Regression Model", 
+    x = "Plasma Glucose Concentration",
+    y = "Probability of being diabete-pos"
+    )
+
+
+# Bivariat
+
+Mit WM.group oder OLS.group als erster Variable (das ist ähnlich STEP method von SPSS).
+
+```{r}
+  model <- glm( MultiR ~ WM.group+OLS.group, data = NResistenzen, family = binomial )      
+  print( summary(model) )
+```
+Nicht mal mehr schwach signifikant - WM und OLS sind 0.186** linear korreliert, also ziemlich stark!
+
+\\\\ 2 Schleifen !!
+
+
+- lohnt $\chi^2$ ?
+- printout erklären oder unterdrücken 
+
+# Alle unabhängigen Variablen 
+
+# Auto 
+
+- ~ SPSS "Step"
+- ~ SPSS "Enter"
+- .SAV schreiben
+- SPSS verwenden & vergleichen
+
+# Random Effects
+
+# AMU confounder
+
+- confounder is 2-schichtiges Kausalitätsmodell, aber Log Reg 1-schichtig !??
